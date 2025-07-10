@@ -13,6 +13,9 @@ code .
 //instalar dependências
 npm install
 
+//atualizar branchs pela main
+git pull origin main
+
 //rodar projeto
 npm run dev
 
