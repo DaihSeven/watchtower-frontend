@@ -2,11 +2,11 @@ import { Contato } from '@/types/contact';
 
 import ContactItem from './ContactItem';
 
-interface ContatoListProps {
+interface ContactListProps {
   readonly contatos: Contato[];
 }
 
-export default function ContatoList({ contatos }: ContatoListProps){
+export default function ContactList({ contatos }: ContactListProps){
   if (!contatos.length) return <p>Nenhum contato encontrado.</p>;
 
   return (

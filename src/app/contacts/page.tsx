@@ -6,6 +6,10 @@ import ContactList from '@/components/ContactList';
 
 export default async function ContatoPage() {
   const contatos = await listContacts();
+  console.log('Contatos:', contatos);
+    if (!contatos) {
+        return <p>Erro ao carregar contatos.</p>;
+    }
 
   return (
     <div className="p-4">

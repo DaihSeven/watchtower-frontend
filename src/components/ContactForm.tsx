@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type Props = {
   readonly initialData?: any;
@@ -9,11 +9,22 @@ type Props = {
 
 export default function ContactForm({ initialData = {}, onSubmit }: Props) {
   const [form, setForm] = useState({
-    nome: initialData.nome || '',
-    email: initialData.email || '',
-    telefone: initialData.telefone || '',
-    mensagem: initialData.mensagem || '',
+    nome: '',
+    email: '',
+    telefone: '',
+    mensagem: '',
   });
+
+  useEffect(() => {
+    if (initialData) {
+      setForm({
+        nome: initialData.nome || '',
+        email: initialData.email || '',
+        telefone: initialData.telefone || '',
+        mensagem: initialData.mensagem || '',
+      });
+    }
+  }, [initialData]);
 
   return (
     <form

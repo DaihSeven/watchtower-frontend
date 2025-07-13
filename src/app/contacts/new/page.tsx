@@ -6,13 +6,14 @@ import { useRouter } from 'next/navigation';
 import { createContact } from '@/lib/apicontact';
 import ContactForm from '@/components/ContactForm';
 
-export default function NovoContatoPage() {
+export default function NewContactPage() {
   const router = useRouter();
   const [erro, setErro] = useState('');
 
   async function handleSubmit(data: any) {
     try {
       await createContact(data);
+      alert('Contato criado com sucesso!');
       router.push('/contato');
     } catch (e) {
       setErro('Erro ao criar contato.');

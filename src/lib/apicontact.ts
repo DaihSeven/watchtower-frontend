@@ -8,7 +8,7 @@ const api = axios.create({
 // GET /contato/listarContatos
 export async function listContacts(): Promise<Contato[]> {
   const res = await api.get('/contato/listarContatos');
-  return res.data;
+   return res.data.contatos;
 }
 
 // POST /contato/criarContato
@@ -20,7 +20,7 @@ export async function createContact(data: Contato): Promise<Contato> {
 // GET /contato/buscarContatoPorId/{id}
 export async function searchContactForId(id: string): Promise<Contato> {
   const res = await api.get(`/contato/buscarContatoPorId/${id}`);
-  return res.data;
+   return res.data.contato;
 }
 
 // PUT /contato/atualizarContato/{id}

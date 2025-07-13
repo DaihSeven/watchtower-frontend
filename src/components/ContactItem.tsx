@@ -5,7 +5,7 @@ export default function ContactItem({ contato }: { contato: any }) {
     <li className="border p-4 rounded shadow hover:bg-gray-50">
       <p><strong>{contato.nome}</strong></p>
       <p>{contato.email} — {contato.telefone}</p>
-      <Link href={`/contato/${contato.id}`} className="text-blue-600 underline">
+      <Link href={`/contacts/${contato.id}`} className="text-blue-600 underline">
         Ver / Editar
       </Link>
     </li>
