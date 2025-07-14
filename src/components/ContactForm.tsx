@@ -1,67 +1,72 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const contactSchema = z.object({
+  nome: z.string().min(2, 'Nome obrigatório'),
+  email: z.string().email('Email inválido'),
+  telefone: z.string().optional(),
+  mensagem: z.string().min(10, 'Mensagem obrigatória'),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
 
 type Props = {
-  readonly initialData?: any;
-  readonly onSubmit: (data: any) => void;
+  readonly initialData?: Partial<ContactFormData>;
+  readonly onSubmit: (data: ContactFormData) => void;
 };
 
 export default function ContactForm({ initialData = {}, onSubmit }: Props) {
-  const [form, setForm] = useState({
-    nome: '',
-    email: '',
-    telefone: '',
-    mensagem: '',
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: initialData,
   });
-
-  useEffect(() => {
-    if (initialData) {
-      setForm({
-        nome: initialData.nome || '',
-        email: initialData.email || '',
-        telefone: initialData.telefone || '',
-        mensagem: initialData.mensagem || '',
-      });
-    }
-  }, [initialData]);
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit(form);
-      }}
-      className="flex flex-col gap-2"
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-4 max-w-md mx-auto bg-white p-6 rounded-lg shadow-md text-purple-700"
     >
       <input
+        {...register('nome')}
         placeholder="Nome"
-        value={form.nome}
-        onChange={(e) => setForm({ ...form, nome: e.target.value })}
-        required
-        className="border p-2"
+        className="border border-purple-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
       />
+      {errors.nome && <p className="text-red-500 text-sm">{errors.nome.message}</p>}
+
       <input
+        {...register('email')}
         placeholder="Email"
-        value={form.email}
-        onChange={(e) => setForm({ ...form, email: e.target.value })}
-        required
-        className="border p-2"
+        className="border border-purple-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
       />
+      {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+
       <input
+        {...register('telefone')}
         placeholder="Telefone"
-        value={form.telefone}
-        onChange={(e) => setForm({ ...form, telefone: e.target.value })}
-        className="border p-2"
+        className="border border-purple-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
       />
+      {errors.telefone && <p className="text-red-500 text-sm">{errors.telefone.message}</p>}
+
       <textarea
+        {...register('mensagem')}
         placeholder="Mensagem"
-        value={form.mensagem}
-        onChange={(e) => setForm({ ...form, mensagem: e.target.value })}
-        required
-        className="border p-2"
+        rows={4}
+        className="border border-purple-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
       />
-      <button type="submit" className="bg-blue-600 text-white p-2 rounded">
+      {errors.mensagem && <p className="text-red-500 text-sm">{errors.mensagem.message}</p>}
+
+      <button
+        type="submit"
+        className="bg-purple-700 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded transition"
+      >
         Enviar
       </button>
     </form>

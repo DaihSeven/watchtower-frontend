@@ -4,11 +4,12 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { searchContactForId, updateContact, deleteContact } from '@/lib/apicontact';
 import ContactForm from '@/components/ContactForm';
+import { Contato } from '@/types/contact';
 
 export default function DetailsContact() {
   const router = useRouter();
   const params = useParams();
-  const [contact, setContact] = useState<any>(null);
+  const [contact, setContact] = useState<Contato | null>(null);
   const [sucesso, setSucesso] = useState('');
   const [carregando, setCarregando] = useState(true);
 
@@ -30,7 +31,7 @@ export default function DetailsContact() {
 
       setTimeout(() => {
         router.push('/contato');
-      }, 2000); // Espera 2 segundos antes de redirecionar
+      }, 2000);
     } catch {
       setSucesso('Erro ao atualizar contato.');
     }
@@ -47,18 +48,18 @@ export default function DetailsContact() {
     <div className="p-4 space-y-4">
       <h1 className="text-2xl font-bold">Editar Contato</h1>
 
-      <ContactForm initialData={contact} onSubmit={handleUpdate} />
+      <ContactForm initialData={contact ?? undefined} onSubmit={handleUpdate} />
 
       {sucesso && <p className="text-green-600">{sucesso}</p>}
 
       <div className="flex gap-4 mt-4">
-        <button onClick={handleDelete} className="text-red-600 underline">
+        <button onClick={handleDelete} className="bg-red-600 text-white font-semibold py-2 px-4 rounded ">
           Deletar Contato
         </button>
 
         <button
           onClick={() => router.push('/contacts')}
-          className="text-blue-600 underline"
+          className="bg-purple-700 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded "
         >
           Voltar
         </button>
