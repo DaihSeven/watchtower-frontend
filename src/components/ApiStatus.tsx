@@ -1,4 +1,3 @@
-// exemplo em algum componente
 'use client';
 
 import { useEffect, useState } from 'react';

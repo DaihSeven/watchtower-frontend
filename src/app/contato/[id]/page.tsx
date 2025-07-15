@@ -4,7 +4,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { buscarContatoPorId, atualizarContato, deletaContato } from '@/lib/apicontato';
 import ContatoForm from '@/components/ContatoForm';
-import { Contato } from '@/types/contato';
+import {  Contato, ContatoFormData } from '@/types/contato';
 
 export default function DetalhesContato() {
   const router = useRouter();
@@ -24,15 +24,22 @@ export default function DetalhesContato() {
     }
   }, [id]);
 
-  async function handleUpdate(data: any) {
-    try {
-      await atualizarContato(id, data);
+  async function handleUpdate(data: ContatoFormData) {
+   try {
+    if (!contact) return; // proteção
+
+    const contatoAtualizado: Contato = {
+      ...contact, 
+      ...data,         
+    };
+      await atualizarContato(contatoAtualizado.id, contatoAtualizado);
+
       setSucesso('Contato atualizado com sucesso!');
 
       setTimeout(() => {
         router.push('/contato');
       }, 2000);
-    } catch {
+    } catch(e: unknown) {
       setSucesso('Erro ao atualizar contato.');
     }
   }
@@ -45,14 +52,14 @@ export default function DetalhesContato() {
   if (carregando) return <p>Carregando...</p>;
 
   return (
-    <div className="p-4 space-y-4">
+    <section className="p-4 space-y-4">
       <h1 className="text-2xl font-bold">Editar Contato</h1>
 
       <ContatoForm initialData={contact ?? undefined} onSubmit={handleUpdate} />
 
       {sucesso && <p className="text-green-600">{sucesso}</p>}
 
-      <div className="flex gap-4 mt-4">
+      <section className="flex gap-4 mt-4">
         <button onClick={handleDelete} className="bg-red-600 text-white font-semibold py-2 px-4 rounded ">
           Deletar Contato
         </button>
@@ -63,7 +70,7 @@ export default function DetalhesContato() {
         >
           Voltar
         </button>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }

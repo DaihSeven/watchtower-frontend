@@ -3,7 +3,9 @@ A ideia é colocar no final da página dois comentários mais o da pessoa se ela
 */
 import { listarContatos } from '@/lib/apicontato';
 import ContatoLista from '@/components/ContatoLista';
+import { useAuth } from "@/context/AuthContext";
 
+const { user } = useAuth();
 export default async function ContatoPage() {
   const contatos = await listarContatos();
   console.log('Contatos:', contatos);

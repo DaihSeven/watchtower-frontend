@@ -11,6 +11,10 @@ export type ContactFormData = z.infer<typeof contactSchema>;
 
 export interface Contato extends ContactFormData {
   id: string;
+  userId: string;  
   criadoEm?: string;
   atualizadoEm?: string;
 }
+
+export type ContatoFormData = Omit<Contato, 'id' | 'userId' | 'criadoEm' | 'atualizadoEm'>;
+
