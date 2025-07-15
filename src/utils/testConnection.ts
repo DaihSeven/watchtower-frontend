@@ -8,8 +8,12 @@ export const testApiConnection = async (url: string): Promise<{ success: boolean
     } else {
       return { success: false, message: `Resposta inesperada: ${response.status}` };
     }
-  } catch (error: any) {
-    console.error('Erro ao testar conexão:', error); // 👈 log detalhado
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Erro ao testar conexão:", error.message);
+    } else {
+      console.error("Erro desconhecido:", error);
+    }
 
     if (axios.isAxiosError(error)) {
       if (error.response) {
