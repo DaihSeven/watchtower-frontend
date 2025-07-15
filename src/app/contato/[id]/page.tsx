@@ -26,7 +26,7 @@ export default function DetalhesContato() {
 
   async function handleUpdate(data: ContatoFormData) {
    try {
-    if (!contact) return; // proteção
+    if (!contact) return;
 
     const contatoAtualizado: Contato = {
       ...contact, 
@@ -39,7 +39,7 @@ export default function DetalhesContato() {
       setTimeout(() => {
         router.push('/contato');
       }, 2000);
-    } catch(e: unknown) {
+    } catch {
       setSucesso('Erro ao atualizar contato.');
     }
   }

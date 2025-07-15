@@ -15,7 +15,7 @@ export default function NovoContatoPage() {
       await criarContato(data);
       alert('Contato criado com sucesso!');
       router.push('/contato');
-    } catch (e: unknown) {
+    } catch {
       setErro('Erro ao criar contato.');
     }
   }
