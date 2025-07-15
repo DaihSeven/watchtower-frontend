@@ -1,7 +1,9 @@
 "use client";
-
+import * as L from 'leaflet';
 import { useEffect, useRef } from 'react';
 import { LocalizacaoComAvistamento } from '@/types/localizacao';
+import { Map as LeafletMap } from 'leaflet';
+import { Marker } from 'leaflet';
 
 interface Props {
   localizacoes: LocalizacaoComAvistamento[];
@@ -10,14 +12,14 @@ interface Props {
 
 declare global {
   interface Window {
-    L: any;
+    L: typeof L;
   }
 }
 
 export default function MapaLocalizacoes({ localizacoes, onMarkerClick }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<any>(null);
-  const markersRef = useRef<any[]>([]);
+  const mapInstanceRef = useRef<LeafletMap | null>(null);
+  const markersRef = useRef<Marker[]>([]);
 
   useEffect(() => {
     // Carregar Leaflet dinamicamente
@@ -57,7 +59,7 @@ export default function MapaLocalizacoes({ localizacoes, onMarkerClick }: Props)
     markersRef.current.forEach(marker => map.removeLayer(marker));
     markersRef.current = [];
 
-    const bounds = window.L.latLngBounds();
+    const bounds = window.L.latLngBounds([]);
 
     localizacoes.forEach(localizacao => {
       if (localizacao.latitude && localizacao.longitude) {
@@ -83,13 +85,13 @@ export default function MapaLocalizacoes({ localizacoes, onMarkerClick }: Props)
 
           // Popup com informações
           const popupContent = `
-            <div>
+            <section>
               <strong>${localizacao.nome || 'Local'}</strong><br>
               ${localizacao.descricao || 'Sem descrição'}<br>
               ${localizacao.avistamento ? `<span style="color: ${statusColor === 'green' ? '#059669' : '#D97706'}">Avistamento: ${statusText}</span><br>` : ''}
               ${localizacao.avistamento ? `Data: ${new Date(localizacao.avistamento.dataAvistamento).toLocaleDateString()}` : ''}
               <br><button class="marker-details-btn" data-id="${localizacao.id}" style="color: #2563eb; text-decoration: underline; background: none; border: none; cursor: pointer;">Ver detalhes</button>
-            </div>
+            </section>
           `;
 
           marker.bindPopup(popupContent);
@@ -118,17 +120,16 @@ export default function MapaLocalizacoes({ localizacoes, onMarkerClick }: Props)
   }, [localizacoes, onMarkerClick]);
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md">
+    <section className="bg-white p-4 rounded-lg shadow-md">
       <h2 className="text-xl font-semibold text-indigo-700 mb-4">Mapa de Avistamentos</h2>
-      <div 
+      <section 
         ref={mapRef} 
         id="map" 
-        className="w-full h-96 rounded-lg"
-        style={{ minHeight: '400px' }}
+        className="w-full h-96 rounded-lg min-h-400"//style não se usa
       />
-      <div className="mt-3 text-sm text-gray-500">
+      <section className="mt-3 text-sm text-gray-500">
         <p>Clique nos marcadores para ver detalhes sobre cada localização.</p>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 } 
