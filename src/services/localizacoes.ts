@@ -1,4 +1,5 @@
 import { Localizacao, LocalizacaoComAvistamento } from "@/types/localizacao";
+import { PessoaDesaparecida } from "@/types/pessoa";
 import { Avistamento } from "@/types/avistamento";
 import { api } from "./api";
 
@@ -37,7 +38,7 @@ export async function getLocalizacoesComAvistamentos(): Promise<LocalizacaoComAv
   }
 }
 
-export async function getPessoaDesaparecida(id: number): Promise<any> {
+export async function getPessoaDesaparecida(id: number): Promise<PessoaDesaparecida> {
   const response = await api.get(`/pessoa/${id}`);
   return response.data;
 } 
