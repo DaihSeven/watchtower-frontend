@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { Contato } from '../types/contato.js';
-
+import { Contato, ContactFormData } from '@/types/contato';
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002',
 });
@@ -12,9 +11,9 @@ export async function listarContatos(): Promise<Contato[]> {
 }
 
 // POST /contato/criarContato
-export async function criarContato(data: Contato): Promise<Contato> {
-  const res = await api.post('/contato/criarContato', data);
-  return res.data;
+export async function criarContato(data: ContactFormData): Promise<Contato> {
+  const response = await api.post('/contato', data);
+  return response.data;
 }
 
 // GET /contato/buscarContatoPorId/{id}

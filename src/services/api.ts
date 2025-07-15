@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
-  timeout: 10000,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  timeout: 20000,
 });
 
 // Interceptor para tratamento de erros
