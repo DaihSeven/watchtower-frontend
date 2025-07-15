@@ -12,4 +12,14 @@ api.interceptors.response.use(
     console.error('Erro na API:', error);
     return Promise.reject(error);
   }
+  
 );
+
+// Interceptor para adicionar token de autenticação
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
