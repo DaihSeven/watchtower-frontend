@@ -37,9 +37,11 @@ export default function DetalhesPessoa({
         <section className="md:col-span-1">
           <section className="bg-gray-100 p-4 rounded-lg flex justify-center">
             {pessoa.foto ? (
-              <image 
+              <Image 
                 src={pessoa.foto} 
                 alt={pessoa.nome}
+                width={128}
+                height={128}
                 className="h-32 w-32 object-cover rounded-lg"
               />
             ) : (
