@@ -2,11 +2,11 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { searchContactForId, updateContact, deleteContact } from '@/lib/apicontact';
-import ContactForm from '@/components/ContactForm';
-import { Contato } from '@/types/contact';
+import { buscarContatoPorId, atualizarContato, deletaContato } from '@/lib/apicontato';
+import ContatoForm from '@/components/ContatoForm';
+import { Contato } from '@/types/contato';
 
-export default function DetailsContact() {
+export default function DetalhesContato() {
   const router = useRouter();
   const params = useParams();
   const [contact, setContact] = useState<Contato | null>(null);
@@ -17,7 +17,7 @@ export default function DetailsContact() {
 
   useEffect(() => {
     if (id) {
-      searchContactForId(id).then((data) => {
+      buscarContatoPorId(id).then((data) => {
         setContact(data);
         setCarregando(false);
       });
@@ -26,7 +26,7 @@ export default function DetailsContact() {
 
   async function handleUpdate(data: any) {
     try {
-      await updateContact(id, data);
+      await atualizarContato(id, data);
       setSucesso('Contato atualizado com sucesso!');
 
       setTimeout(() => {
@@ -38,7 +38,7 @@ export default function DetailsContact() {
   }
 
   async function handleDelete() {
-    await deleteContact(id);
+    await deletaContato(id);
     router.push('/contato');
   }
 
@@ -48,7 +48,7 @@ export default function DetailsContact() {
     <div className="p-4 space-y-4">
       <h1 className="text-2xl font-bold">Editar Contato</h1>
 
-      <ContactForm initialData={contact ?? undefined} onSubmit={handleUpdate} />
+      <ContatoForm initialData={contact ?? undefined} onSubmit={handleUpdate} />
 
       {sucesso && <p className="text-green-600">{sucesso}</p>}
 
@@ -58,7 +58,7 @@ export default function DetailsContact() {
         </button>
 
         <button
-          onClick={() => router.push('/contacts')}
+          onClick={() => router.push('/contato')}
           className="bg-purple-700 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded "
         >
           Voltar
