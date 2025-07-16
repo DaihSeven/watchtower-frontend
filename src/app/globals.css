@@ -20,3 +20,9 @@
 body {
   @apply antialiased text-[var(--foreground)] bg-[var(--background)];
 }
+
+/* Estilo dos inputs das páginas Login e Cadastro */
+
+.input-base {
+  @apply border-(--main-color) border-2 border-solid rounded-lg p-1 w-100 text-center;
+}
