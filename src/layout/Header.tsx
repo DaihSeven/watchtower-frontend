@@ -1,10 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { User } from "lucide-react";
-import Cards from "./CardsPessoas";
-import Carrossel from "./Carrossel";
-
-
 
 export default function Services() {
   return (
@@ -52,9 +48,9 @@ export default function Services() {
           </li>
           <li>
             <Link
-              href="#"
+              href="/cadastro"
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
-              item2
+              cadastro
             </Link>
           </li>
         </ul>
@@ -68,7 +64,8 @@ export default function Services() {
 
           
           <button className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition duration-200">
-            Register
+            Cadastro
+           
           </button>
 
           
@@ -112,9 +109,7 @@ export default function Services() {
 
         </div>
       </section>
-      <Carrossel/>
-      <Cards/>
-      
+    
     </header>
   );
 }
