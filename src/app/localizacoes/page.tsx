@@ -5,7 +5,6 @@ import MapaLocalizacoes from '@/components/MapaLocalizacoes';
 import ListaLocalizacoes from '@/components/ListaLocalizacoes';
 import DetalhesPessoa from '@/components/DetalhesPessoa';
 import { LocalizacaoComAvistamento, PessoaDesaparecida } from '@/types/localizacao';
-import { getLocalizacoesComAvistamentos, getPessoaDesaparecida } from '@/services/localizacoes';
 
 export default function LocalizacoesPage() {
   const [localizacoes, setLocalizacoes] = useState<LocalizacaoComAvistamento[]>([]);

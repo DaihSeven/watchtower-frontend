@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createPessoa, updatePessoa } from "@/services/pessoas";
-import { Pessoa } from "@/types/pessoa";
+import { Pessoa } from "@/types/pessoas";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -34,6 +34,12 @@ export default function PessoaForm({ editData, onSuccess, onCancelEdit }: Props)
     formState: { errors },
   } = useForm<PessoaFormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      nome: "",
+      idade: 0,
+      descricao: "",
+      ultimaLocalizacao: "",
+    },
   });
 
   useEffect(() => {

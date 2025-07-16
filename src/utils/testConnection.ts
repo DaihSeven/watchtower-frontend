@@ -1,7 +1,7 @@
 import axios from 'axios';
-//import { api } from '@/services/api';
 
-export const testApiConnection = async (url: string): Promise<{ success: boolean; message: string }> => {
+export const testApiConnection = async (url: string): Promise<{ success: boolean; message: string }> => 
+  {
   try {
     const response = await axios.get(url, { timeout: 20000 });
     if (response.status === 200) {

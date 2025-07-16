@@ -8,4 +8,5 @@ export interface Pessoa {
   criadoEm?: string;
   atualizadoEm?: string;
   userId?: number;
+  ultimaLocalizacao?: string;
 }

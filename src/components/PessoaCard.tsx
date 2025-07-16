@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { Pessoa } from "@/types/pessoa";
+import { Pessoa } from "@/types/pessoas";
 import { deletePessoa } from "@/services/pessoas";
 import { useState } from "react";
 
 interface Props {
   pessoa: Pessoa;
   onDeleted?: () => void;
-  onEdit: (pessoa: Pessoa) => void;
+  onEdit?: (pessoa: Pessoa) => void;
 }
 
 export default function PessoaCard({ pessoa, onDeleted, onEdit }: Props) {
@@ -44,12 +44,14 @@ export default function PessoaCard({ pessoa, onDeleted, onEdit }: Props) {
 
       <div className="flex gap-2 mt-2">
         <button
-          onClick={() => onEdit(pessoa)}
+          type="button"
+          onClick={() => onEdit?.(pessoa)}
           className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
         >
           ✏️ Editar
         </button>
         <button
+          type="button"
           onClick={handleDelete}
           disabled={loading}
           className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"

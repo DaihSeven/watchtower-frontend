@@ -23,7 +23,6 @@ export default function ContatoForm({ initialData = {}, onSubmit }: Props) {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<ContatoFormData>({
     resolver: zodResolver(contatoSchema),
     defaultValues: initialData,
