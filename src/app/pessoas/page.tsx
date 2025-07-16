@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getAllPessoas } from "@/services/pessoas";
-import { Pessoa } from "@/types/pessoa";
+import { Pessoa } from "@/types/pessoas";
 import PessoaCard from "@/components/PessoaCard";
 import PessoaForm from "@/components/PessoaForm";
 

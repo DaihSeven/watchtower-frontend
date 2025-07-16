@@ -8,9 +8,13 @@ interface Props {
   avistamento: Avistamento;
   onDeleted?: () => void;
   onEdit: (avistamento: Avistamento) => void;
+  user: {
+    id: number;
+    tipo_usuario: string;
+  } | null;
 }
 
-export default function AvistamentoCard({ avistamento, onDeleted, onEdit }: Props) {
+export default function AvistamentoCard({ avistamento, onDeleted, onEdit, user }: Props) {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -27,6 +31,8 @@ export default function AvistamentoCard({ avistamento, onDeleted, onEdit }: Prop
       setLoading(false);
     }
   };
+
+  const isOwner = user?.id === avistamento.userId || user?.tipo_usuario === "ADMIN";
 
   return (
     <div className="bg-white border rounded-lg shadow p-4 space-y-2">
@@ -55,21 +61,23 @@ export default function AvistamentoCard({ avistamento, onDeleted, onEdit }: Prop
         <p><strong>Contato:</strong> {avistamento.contatoInformante}</p>
       )}
 
-      <div className="flex gap-2 mt-2">
-        <button
-          onClick={() => onEdit(avistamento)}
-          className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
-        >
-          ✏️ Editar
-        </button>
-        <button
-          onClick={handleDelete}
-          disabled={loading}
-          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-        >
-          {loading ? "Excluindo..." : "🗑️ Excluir"}
-        </button>
-      </div>
+      {isOwner && (
+        <div className="flex gap-2 mt-2">
+          <button
+            onClick={() => onEdit(avistamento)}
+            className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+          >
+            ✏️ Editar
+          </button>
+          <button
+            onClick={handleDelete}
+            disabled={loading}
+            className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+          >
+            {loading ? "Excluindo..." : "🗑️ Excluir"}
+          </button>
+        </div>
+      )}
 
       {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
     </div>

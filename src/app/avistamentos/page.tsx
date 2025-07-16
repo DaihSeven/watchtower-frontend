@@ -6,10 +6,16 @@ import { Avistamento } from "@/types/avistamento";
 import AvistamentoCard from "@/components/AvistamentoCard";
 import AvistamentoForm from "@/components/AvistamentoForm";
 
+interface User {
+  id: number;
+  tipo_usuario: string;
+}
+
 export default function AvistamentosPage() {
   const [avistamentos, setAvistamentos] = useState<Avistamento[]>([]);
   const [loading, setLoading] = useState(true);
   const [editData, setEditData] = useState<Avistamento | undefined>(undefined);
+  const [user, setUser] = useState<User | null>(null);
 
   const fetchAvistamentos = async () => {
     try {
@@ -25,23 +31,25 @@ export default function AvistamentosPage() {
 
   useEffect(() => {
     fetchAvistamentos();
+    const stored = localStorage.getItem("user");
+    if (stored) setUser(JSON.parse(stored));
   }, []);
 
   return (
     <div className="p-4 space-y-6">
       <h1 className="text-2xl font-bold">Avistamentos</h1>
 
-      {/* Formulário: modo criação ou edição */}
-      <AvistamentoForm
-        editData={editData}
-        onSuccess={() => {
-          fetchAvistamentos();
-          setEditData(undefined);
-        }}
-        onCancelEdit={() => setEditData(undefined)}
-      />
+      {user && (
+        <AvistamentoForm
+          editData={editData}
+          onSuccess={() => {
+            fetchAvistamentos();
+            setEditData(undefined);
+          }}
+          onCancelEdit={() => setEditData(undefined)}
+        />
+      )}
 
-      {/* Lista de Avistamentos */}
       {loading ? (
         <p>Carregando avistamentos...</p>
       ) : avistamentos.length === 0 ? (
@@ -54,6 +62,7 @@ export default function AvistamentosPage() {
               avistamento={a}
               onDeleted={fetchAvistamentos}
               onEdit={(item) => setEditData(item)}
+              user={user}
             />
           ))}
         </div>

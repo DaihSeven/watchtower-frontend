@@ -1,15 +1,16 @@
 import axios from 'axios';
 
-export const testApiConnection = async (url: string): Promise<{ success: boolean; message: string }> => {
+export const testApiConnection = async (url: string): Promise<{ success: boolean; message: string }> => 
+  {
   try {
-    const response = await axios.get(url, { timeout: 10000 });
+    const response = await axios.get(url, { timeout: 20000 });
     if (response.status === 200) {
       return { success: true, message: 'Conexão bem-sucedida!' };
     } else {
       return { success: false, message: `Resposta inesperada: ${response.status}` };
     }
-  } catch (error: any) {
-    console.error('Erro ao testar conexão:', error); // 👈 log detalhado
+  } catch (error: unknown) {
+    console.error('Erro ao testar conexão:', error); 
 
     if (axios.isAxiosError(error)) {
       if (error.response) {

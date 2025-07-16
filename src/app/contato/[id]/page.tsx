@@ -2,11 +2,11 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { searchContactForId, updateContact, deleteContact } from '@/lib/apicontact';
-import ContactForm from '@/components/ContactForm';
-import { Contato } from '@/types/contact';
+import { buscarContatoPorId, atualizarContato, deletaContato } from '@/lib/apicontato';
+import ContatoForm from '@/components/ContatoForm';
+import {  Contato, ContatoFormData } from '@/types/contato';
 
-export default function DetailsContact() {
+export default function DetalhesContato() {
   const router = useRouter();
   const params = useParams();
   const [contact, setContact] = useState<Contato | null>(null);
@@ -17,16 +17,23 @@ export default function DetailsContact() {
 
   useEffect(() => {
     if (id) {
-      searchContactForId(id).then((data) => {
+      buscarContatoPorId(id).then((data) => {
         setContact(data);
         setCarregando(false);
       });
     }
   }, [id]);
 
-  async function handleUpdate(data: any) {
-    try {
-      await updateContact(id, data);
+  async function handleUpdate(data: ContatoFormData) {
+   try {
+    if (!contact) return;
+
+    const contatoAtualizado: Contato = {
+      ...contact, 
+      ...data,         
+    };
+      await atualizarContato(contatoAtualizado.id, contatoAtualizado);
+
       setSucesso('Contato atualizado com sucesso!');
 
       setTimeout(() => {
@@ -38,32 +45,32 @@ export default function DetailsContact() {
   }
 
   async function handleDelete() {
-    await deleteContact(id);
+    await deletaContato(id);
     router.push('/contato');
   }
 
   if (carregando) return <p>Carregando...</p>;
 
   return (
-    <div className="p-4 space-y-4">
+    <section className="p-4 space-y-4">
       <h1 className="text-2xl font-bold">Editar Contato</h1>
 
-      <ContactForm initialData={contact ?? undefined} onSubmit={handleUpdate} />
+      <ContatoForm initialData={contact ?? undefined} onSubmit={handleUpdate} />
 
       {sucesso && <p className="text-green-600">{sucesso}</p>}
 
-      <div className="flex gap-4 mt-4">
+      <section className="flex gap-4 mt-4">
         <button onClick={handleDelete} className="bg-red-600 text-white font-semibold py-2 px-4 rounded ">
           Deletar Contato
         </button>
 
         <button
-          onClick={() => router.push('/contacts')}
+          onClick={() => router.push('/contato')}
           className="bg-purple-700 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded "
         >
           Voltar
         </button>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }

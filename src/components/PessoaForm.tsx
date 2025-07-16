@@ -34,6 +34,12 @@ export default function PessoaForm({ editData, onSuccess, onCancelEdit }: Props)
     formState: { errors },
   } = useForm<PessoaFormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      nome: "",
+      idade: 0,
+      descricao: "",
+      ultimaLocalizacao: "",
+    },
   });
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 "use client";
-
+import { JWTPayload } from "@/types/user"; 
 import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { User } from "@/types/user";
@@ -18,21 +18,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+  const storedToken = localStorage.getItem("token");
 
-    if (storedToken) {
-      const decodedUser: User = jwtDecode(storedToken);
-      setToken(storedToken);
-      setUser(decodedUser);
-    }
-  }, []);
-
-  const login = (token: string) => {
-    const decodedUser: User = jwtDecode(token)
-    localStorage.setItem('token', token);
+  if (storedToken) {
+    const decoded = jwtDecode<JWTPayload>(storedToken);
+    const decodedUser: User = {
+      id: Number(decoded.id), 
+      nome: decoded.nome,
+      email: decoded.email,
+      tipo_usuario:decoded.tipo_usuario,
+    };
+    setToken(storedToken);
     setUser(decodedUser);
-    setToken(token);
+  }
+}, []);
+
+const login = (token: string) => {
+  const decoded = jwtDecode<JWTPayload>(token);
+  const decodedUser: User = {
+    id: Number(decoded.id),
+    nome: decoded.nome,
+    email: decoded.email,
+    tipo_usuario: decoded.tipo_usuario,
   };
+  localStorage.setItem("token", token);
+  setUser(decodedUser);
+  setToken(token);
+};
+
 
   const logout = () => {
     localStorage.removeItem("token");

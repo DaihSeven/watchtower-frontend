@@ -7,7 +7,7 @@ export interface Avistamento {
   longitude?: number;
   nomeInformante?: string;
   contatoInformante?: string;
-  dataHora?: string;
+  userId: number;
   dataCadastro?: string;
   dataAtualizacao?: string;
 }

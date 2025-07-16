@@ -4,28 +4,27 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const contactSchema = z.object({
+const contatoSchema = z.object({
   nome: z.string().min(2, 'Nome obrigatório'),
   email: z.string().email('Email inválido'),
   telefone: z.string().optional(),
   mensagem: z.string().min(10, 'Mensagem obrigatória'),
 });
 
-type ContactFormData = z.infer<typeof contactSchema>;
+type ContatoFormData = z.infer<typeof contatoSchema>;
 
 type Props = {
-  readonly initialData?: Partial<ContactFormData>;
-  readonly onSubmit: (data: ContactFormData) => void;
+  readonly initialData?: Partial<ContatoFormData>;
+  readonly onSubmit: (data: ContatoFormData) => void;
 };
 
-export default function ContactForm({ initialData = {}, onSubmit }: Props) {
+export default function ContatoForm({ initialData = {}, onSubmit }: Props) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
-  } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
+  } = useForm<ContatoFormData>({
+    resolver: zodResolver(contatoSchema),
     defaultValues: initialData,
   });
 
