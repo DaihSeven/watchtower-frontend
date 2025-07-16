@@ -23,15 +23,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
 
-      <body className={poppins.className `${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${poppins.className }antialiased`}>
         <Header />
         <AuthProvider>
         {children}
         </AuthProvider>
         <Footer />
-      <body
-        
-      
+      </body>
+              
     </html>
   );
 }
