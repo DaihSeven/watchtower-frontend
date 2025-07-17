@@ -26,10 +26,22 @@ body {
 
 /* Estilo dos inputs das páginas Login e Cadastro */
 
+.section-user {
+  @apply bg-[#ffffff] text-gray-700 w-full h-100 flex flex-col justify-center items-center gap-10 h-152;
+}
+
+.form-user {
+  @apply flex flex-col items-center gap-2;
+}
+
 .input-base {
   border: 2px solid var(--main-color);
   border-radius: 0.5rem;
   padding: 0.25rem;
   width: 100%;
   text-align: center;
+}
+
+.button-form {
+  @apply flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition duration-200 cursor-pointer;
 }

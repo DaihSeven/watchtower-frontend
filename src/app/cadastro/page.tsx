@@ -38,7 +38,8 @@ export default function RegisterPage() {
   };
 
   return (
-    <section className="bg-[#ffffff] text-gray-700 w-full h-100 flex justify-center items-center">
+    <section className="section-user">
+      <h1 className="text-5xl">Cadastro</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col items-center gap-2"
@@ -48,20 +49,20 @@ export default function RegisterPage() {
           placeholder="Nome"
           className="input-base"
         />
-        {errors.nome && <p>{errors.nome.message?.toString()}</p>}
+        {errors.nome && <p>{errors.nome.message}</p>}
         <input
           {...register("email")}
           placeholder="Email"
           className="input-base"
         />
-        {errors.email && <p>{errors.email.message?.toString()}</p>}
+        {errors.email && <p>{errors.email.message}</p>}
         <input
           type="password"
           {...register("senha")}
           placeholder="Senha"
           className="input-base"
         />
-        {errors.senha && <p>{errors.senha.message?.toString()}</p>}
+        {errors.senha && <p>{errors.senha.message}</p>}
         <select
           {...register("tipo_usuario")}
           className="rounded-lg border-(--main-color) border-solid border-2"
@@ -79,7 +80,7 @@ export default function RegisterPage() {
         )}
         <button
           type="submit"
-          className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition duration-200"
+          className="button-form"
         >
           Cadastrar
         </button>
