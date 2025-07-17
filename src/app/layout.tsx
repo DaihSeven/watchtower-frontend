@@ -29,8 +29,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {children}
         </AuthProvider>
         <Footer />
-      </body>
-              
+      </body>      
     </html>
   );
 }
