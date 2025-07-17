@@ -19,7 +19,11 @@ export default function PessoaCard({ pessoa, onDeleted, onEdit }: Props) {
     if (!confirm("Tem certeza que deseja excluir esta pessoa?")) return;
     try {
       setLoading(true);
-      await deletePessoa(pessoa.id);
+      if (typeof pessoa.id === "number") {
+        await deletePessoa(pessoa.id);
+      } else {
+        throw new Error("ID da pessoa está indefinido.");
+      }
       onDeleted?.();
     } catch (error) {
       console.error("Erro ao excluir pessoa:", error);

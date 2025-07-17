@@ -27,11 +27,23 @@ body {
 /* Estilo dos inputs das páginas Login e Cadastro */
 
 .section-user {
-  @apply bg-[#ffffff] text-gray-700 w-full h-100 flex flex-col justify-center items-center gap-10 h-152;
+  background-color: #ffffff;
+  color: #4b5563; /* Tailwind's text-gray-700 */
+  width: 100%;
+  height: 25rem; /* h-100 in Tailwind is 25rem */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem; /* gap-10 in Tailwind is 2.5rem */
+  min-height: 38rem; /* h-152 in Tailwind is 38rem */
 }
 
 .form-user {
-  @apply flex flex-col items-center gap-2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem; /* gap-2 in Tailwind is 0.5rem */
 }
 
 .input-base {
@@ -43,5 +55,20 @@ body {
 }
 
 .button-form {
-  @apply flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition duration-200 cursor-pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* gap-2 in Tailwind is 0.5rem */
+  background-color: #2563eb; /* bg-blue-600 */
+  color: #fff; /* text-white */
+  padding-left: 1.25rem; /* px-5 */
+  padding-right: 1.25rem; /* px-5 */
+  padding-top: 0.5rem; /* py-2 */
+  padding-bottom: 0.5rem; /* py-2 */
+  border-radius: 9999px; /* rounded-full */
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.button-form:hover {
+  background-color: #1d4ed8; /* bg-blue-700 */
 }

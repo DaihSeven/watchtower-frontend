@@ -51,10 +51,20 @@ export default function PessoaForm({ editData, onSuccess, onCancelEdit }: Props)
     try {
       setLoading(true);
       if (editData) {
-        await updatePessoa(editData.id, data);
+        if (typeof editData.id === "number") {
+          await updatePessoa(editData.id, {
+            ...data,
+            desaparecidoDesde: editData.desaparecidoDesde,
+          });
+        } else {
+          throw new Error("ID da pessoa para edição não está definido.");
+        }
         setSuccessMsg("Pessoa atualizada com sucesso!");
       } else {
-        await createPessoa(data);
+        await createPessoa({
+          ...data,
+          desaparecidoDesde: new Date().toISOString(), // ou defina conforme necessário
+        });
         setSuccessMsg("Pessoa cadastrada com sucesso!");
       }
       reset();
@@ -90,10 +100,11 @@ export default function PessoaForm({ editData, onSuccess, onCancelEdit }: Props)
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <label className="block text-base font-medium text-gray-800 mb-2">
+          <label htmlFor="nome" className="block text-base font-medium text-gray-800 mb-2">
             Nome Completo
           </label>
           <motion.input
+            id="nome"
             {...register("nome")}
             whileFocus={{ scale: 1.01, borderColor: "#3b82f6" }}
             className="w-full px-4 py-3 text-gray-900 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
@@ -117,10 +128,11 @@ export default function PessoaForm({ editData, onSuccess, onCancelEdit }: Props)
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.15 }}
         >
-          <label className="block text-base font-medium text-gray-800 mb-2">
+          <label htmlFor="idade" className="block text-base font-medium text-gray-800 mb-2">
             Idade
           </label>
           <motion.input
+            id="idade"
             type="number"
             {...register("idade")}
             whileFocus={{ scale: 1.01, borderColor: "#3b82f6" }}
@@ -145,15 +157,17 @@ export default function PessoaForm({ editData, onSuccess, onCancelEdit }: Props)
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <label className="block text-base font-medium text-gray-800 mb-2">
+          <label htmlFor="descricao" className="block text-base font-medium text-gray-800 mb-2">
             Descrição
           </label>
           <motion.textarea
+            id="descricao"
             {...register("descricao")}
             whileFocus={{ scale: 1.01, borderColor: "#3b82f6" }}
             rows={4}
             className="w-full px-4 py-3 text-gray-900 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
           />
+
           <AnimatePresence>
             {errors.descricao && (
               <motion.p
@@ -173,14 +187,16 @@ export default function PessoaForm({ editData, onSuccess, onCancelEdit }: Props)
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.25 }}
         >
-          <label className="block text-base font-medium text-gray-800 mb-2">
+          <label htmlFor="ultimaLocalizacao" className="block text-base font-medium text-gray-800 mb-2">
             Última Localização
           </label>
           <motion.input
-            {...register("ultimaLocalizacao")}
-            whileFocus={{ scale: 1.01, borderColor: "#3b82f6" }}
-            className="w-full px-4 py-3 text-gray-900 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
+          id="ultimaLocalizacao"
+          {...register("ultimaLocalizacao")}
+          whileFocus={{ scale: 1.01, borderColor: "#3b82f6" }}
+          className="w-full px-4 py-3 text-gray-900 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
           />
+
         </motion.div>
       </div>
 

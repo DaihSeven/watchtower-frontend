@@ -1,13 +1,26 @@
 "use client";
+import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { Pessoa } from "@/types/pessoas";
+
+interface SessionUser {
+  id?: string;
+  role?: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+}
+
+interface Session {
+  user?: SessionUser;
+}
 
 interface PessoaCardProps {
   pessoa: Pessoa;
 }
 
 export default function PessoaCard({ pessoa }: PessoaCardProps) {
-  const { data: session } = useSession();
+  const { data: session } = useSession() as { data: Session | null };
   const isOwner = session?.user?.id === pessoa.userId;
   const isAdmin = session?.user?.role === "admin";
 
@@ -23,10 +36,12 @@ export default function PessoaCard({ pessoa }: PessoaCardProps) {
       )}
       {pessoa.descricao && <p className="mt-2">{pessoa.descricao}</p>}
       {pessoa.fotoUrl && (
-        <img
+        <Image
           src={pessoa.fotoUrl}
           alt={`Foto de ${pessoa.nome}`}
           className="mt-4 rounded-md max-h-64 object-cover"
+          width={400}
+          height={256}
         />
       )}
 

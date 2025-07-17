@@ -1,4 +1,4 @@
-import { Pessoa } from "@/types/pessoa";
+import { Pessoa } from "@/types/pessoas";
 import { api } from "./api";
 
 export async function getAllPessoas(): Promise<Pessoa[]> {
