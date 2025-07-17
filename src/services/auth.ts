@@ -1,15 +1,13 @@
-import axios from 'axios';
 import { User } from '@/types/user';
-
-const URL_API = 'https://watchtower-backend.onrender.com'; // Depois colocar a URL da API
+import { api } from './api';
 
 interface LoginResponse {
     token: string,
-    user: User,
+    usuario: User,
 }
 
 export const loginUser = async (email: string, senha: string): Promise<LoginResponse> => {
-    const responseLogin = await axios.post(`${URL_API}/user/login`, {
+    const responseLogin = await api.post(`/user/login`, {
         email,
         senha,
     });
@@ -17,7 +15,7 @@ export const loginUser = async (email: string, senha: string): Promise<LoginResp
 };
 
 export const registerUser = async (nome: string, email: string, senha: string, tipo_usuario: string, senha_admin?: string) => {
-    const responseRegister = await axios.post(`${URL_API}/user/registrar`, {
+    const responseRegister = await api.post(`/user/registrar`, {
         nome,
         email,
         senha,

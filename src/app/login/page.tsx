@@ -18,19 +18,29 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginValidation) => {
     try {
       const res = await loginUser(data.email, data.senha);
-      login(res.token, res.user);
-      router.push("/dashboard");
+      login(res.token, res.usuario);
+      console.log(res.usuario?.tipo_usuario)
+      if(res.usuario?.tipo_usuario === 'admin') {
+        router.push("/dashboard")
+      } else {
+        router.push("/home");
+      }
     } catch (error) {
       console.error("Erro no login:", error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("email")} placeholder="Email" />
-      <input type="password" {...register("senha")} placeholder="Senha" />
-      <button type="submit">Entrar</button>
-      <pre>{JSON.stringify(errors, null, 2)}</pre>
-    </form>
+    <section className="section-user">
+      <h1 className="text-5xl">Login</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="form-user">
+        <input {...register("email")} placeholder="Email"  className="input-base"/>
+        {errors.email && <p>{errors.email.message}</p>}
+        <input type="password" {...register("senha")} placeholder="Senha"  className="input-base"/>
+        {errors.senha && <p>{errors.senha.message}</p>}
+        <button type="submit" className="button-form">Entrar</button>
+        {/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+      </form>
+    </section>
   );
 }
