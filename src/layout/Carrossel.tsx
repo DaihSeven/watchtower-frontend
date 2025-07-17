@@ -1,25 +1,28 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import type { Pessoa } from '@/types/pessoas';
 
 export default function Carrossel() {
   const [pessoas, setPessoas] = useState<Pessoa[]>([]);
   const [current, setCurrent] = useState(0);
+  const intervaloRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const fetchPessoas = async () => {
       try {
-        const response = await axios.get('https://watchtower-backend.onrender.com/pessoas');
-        console.log('Resposta da API:', response.data);
-
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/pessoas`);
         const dados = Array.isArray(response.data)
           ? response.data
           : response.data.pessoas;
 
         if (Array.isArray(dados)) {
-          setPessoas(dados);
+          const embaralhadas = dados
+            .toSorted(() => 0.5 - Math.random()) // preferível ao sort mutável
+            .slice(0, 5);
+
+          setPessoas(embaralhadas);
         } else {
           console.error('Formato inesperado:', response.data);
         }
@@ -38,13 +41,36 @@ export default function Carrossel() {
     fetchPessoas();
   }, []);
 
+  const startAutoRotate = () => {
+    if (intervaloRef.current) return; // já está rodando
+    intervaloRef.current = setInterval(() => {
+      setCurrent((prev) => (prev === pessoas.length - 1 ? 0 : prev + 1));
+    }, 5 * 60 * 1000);
+  };
+
+  const pauseAutoRotate = () => {
+    if (intervaloRef.current) {
+      clearInterval(intervaloRef.current);
+      intervaloRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    if (pessoas.length > 0) {
+      startAutoRotate();
+    }
+    return () => pauseAutoRotate();
+  }, [pessoas]);
+
   const total = pessoas.length;
 
   const prevSlide = () => {
+    pauseAutoRotate();
     setCurrent((prev) => (prev === 0 ? total - 1 : prev - 1));
   };
 
   const nextSlide = () => {
+    startAutoRotate();
     setCurrent((prev) => (prev === total - 1 ? 0 : prev + 1));
   };
 
@@ -71,15 +97,14 @@ export default function Carrossel() {
           {pessoaAtual.idade && (
             <p className="text-base text-gray-800">Idade: {pessoaAtual.idade}</p>
           )}
-          {/* Você pode reativar estas linhas se os dados forem válidos */}
-          {/* {pessoaAtual.ultimaLocalizacao && (
-            <p className="text-base text-gray-800">
+          {pessoaAtual.descricao && (
+            <p className="text-base text-gray-700">{pessoaAtual.descricao}</p>
+          )}
+          {pessoaAtual.ultimaLocalizacao && (
+            <p className="text-base text-gray-600">
               Última localização: {pessoaAtual.ultimaLocalizacao}
             </p>
           )}
-          <p className="text-sm text-gray-600 italic">
-            Desaparecido desde: {pessoaAtual.desaparecidoDesde}
-          </p> */}
         </div>
 
         <button
@@ -97,13 +122,17 @@ export default function Carrossel() {
         </button>
 
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-          {pessoas.map((_, i) => (
-            <span
-              key={i}
-              onClick={() => setCurrent(i)}
+          {pessoas.map((p) => (
+            <button
+              key={p.id || p.nome} // precisa ser único
+              onClick={() => {
+                pauseAutoRotate();
+                setCurrent(pessoas.indexOf(p));
+              }}
               className={`w-3 h-3 rounded-full cursor-pointer ${
-                i === current ? 'bg-blue-600' : 'bg-gray-300'
+                pessoas.indexOf(p) === current ? 'bg-blue-600' : 'bg-gray-300'
               }`}
+              aria-label={`Ir para o slide ${p.nome}`}
             />
           ))}
         </div>

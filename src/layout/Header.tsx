@@ -5,10 +5,10 @@ import Link from "next/link";
 import { User, Menu } from "lucide-react";
 
 export default function Services() {
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   return (
-    <header className="bg-white shadow-sm">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white shadow-sm">
       <nav className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         {/* Logo */}
         <Link href="/">
@@ -52,15 +52,22 @@ export default function Services() {
             </button>
           </Link>
 
-          <button className="flex items-center gap-2 bg-blue-100 text-blue-700 px-5 py-2 rounded-full hover:bg-blue-200 transform transition duration-200 hover:scale-110">
-            <User className="w-5 h-5" />
-          </button>
+          <button
+              className="flex items-center gap-2 bg-blue-100 text-blue-700 px-5 py-2 rounded-full hover:bg-blue-200 transform transition duration-200 hover:scale-110"
+              title="Perfil"
+              aria-label="Perfil"
+            >
+              <User className="w-5 h-5" />
+              <span className="sr-only">Perfil</span>
+            </button>
         </div>
 
         {/* Ícone do menu (mobile) */}
         <button
           onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
           className="md:hidden p-2 rounded-md text-blue-600 hover:bg-blue-100"
+          title="Menu"
+          aria-label="Menu"
         >
           <Menu className="w-6 h-6" />
         </button>
@@ -73,7 +80,8 @@ export default function Services() {
           <ul className="flex flex-col gap-2 w-full max-w-xs">
             {[
               { label: "Home", href: "/" },
-              { label: "Pessoas", href: "/pessoaas" },
+              { label: "Pessoas", href: "/pessoas" },
+              { label: "Avistamentos", href: "/avistamentos" },
               { label: "Localizações", href: "/localizacoes" },
               { label: "Contato", href: "/contato" },
             ].map(({ label, href }) => (
@@ -102,8 +110,13 @@ export default function Services() {
               </button>
             </Link>
 
-            <button className="w-full bg-blue-100 text-blue-700 px-5 py-2 rounded-full hover:bg-blue-200 transition duration-200 hover:scale-105">
+            <button
+              className="w-full bg-blue-100 text-blue-700 px-5 py-2 rounded-full hover:bg-blue-200 transition duration-200 hover:scale-105"
+              title="Perfil"
+              aria-label="Perfil"
+            >
               <User className="w-5 h-5 mx-auto" />
+              <span className="sr-only">Perfil</span>
             </button>
           </div>
         </div>
