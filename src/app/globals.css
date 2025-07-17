@@ -18,5 +18,8 @@
 }
 
 body {
-  @apply antialiased text-[var(--foreground)] bg-[var(--background)];
+  color: var(--foreground);
+  background-color: var(--background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

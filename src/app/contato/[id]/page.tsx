@@ -1,5 +1,5 @@
 'use client';
-
+import { HiChevronDoubleLeft, HiOutlinePencilAlt, HiTrash } from "react-icons/hi";
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { buscarContatoPorId, atualizarContato, deletaContato } from '@/lib/apicontato';
@@ -52,23 +52,21 @@ export default function DetalhesContato() {
   if (carregando) return <p>Carregando...</p>;
 
   return (
-    <section className="p-4 space-y-4">
-      <h1 className="text-2xl font-bold">Editar Contato</h1>
+    <section className="p-4 space-y-4 bg-white">
+      <h1 className="flex items-center gap-2 my-4 text-2xl text-[#000] font-bold"><HiOutlinePencilAlt />Editar Contato</h1>
 
       <ContatoForm initialData={contact ?? undefined} onSubmit={handleUpdate} />
 
       {sucesso && <p className="text-green-600">{sucesso}</p>}
 
       <section className="flex gap-4 mt-4">
-        <button onClick={handleDelete} className="bg-red-600 text-white font-semibold py-2 px-4 rounded ">
-          Deletar Contato
+        <button onClick={handleDelete} className="flex items-center gap-2 bg-red-600 text-white font-semibold py-2 px-4 rounded "><HiTrash />Deletar Contato
         </button>
 
         <button
           onClick={() => router.push('/contato')}
-          className="bg-purple-700 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded "
-        >
-          Voltar
+          className="flex items-center gap-2 bg-blue-700 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded "
+        ><HiChevronDoubleLeft />Voltar
         </button>
       </section>
     </section>
