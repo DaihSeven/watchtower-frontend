@@ -15,7 +15,7 @@ export default function PessoasPage() {
     try {
       setLoading(true);
       const data = await getAllPessoas();
-      setPessoas(data);
+      setPessoas(data ?? []);
     } catch (error) {
       console.error("Erro ao buscar pessoas:", error);
     } finally {

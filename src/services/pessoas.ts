@@ -3,6 +3,7 @@ import { api } from "./api";
 
 export async function getAllPessoas(): Promise<Pessoa[]> {
   const response = await api.get("/pessoas");
+  console.log(response.data)
   return response.data.pessoas;
 }
 
