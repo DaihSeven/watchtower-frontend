@@ -31,7 +31,7 @@ export default function ContatoForm({ initialData = {}, onSubmit }: Props) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 max-w-md mx-auto bg-white p-6 rounded-lg shadow-md text-purple-700"
+      className="flex flex-col gap-4 max-w-md mx-auto bg-[#fff] p-6 rounded-lg border-2 border-purple-500 shadow-[0_0_20px_5px_rgba(168,85,247,0.6)] transition duration-500 text-purple-700"
     >
       <input
         {...register('nome')}
