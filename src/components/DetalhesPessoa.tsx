@@ -1,18 +1,17 @@
 "use client";
 import Image from 'next/image';
 import { PessoaDesaparecida } from '@/types/localizacao';
+import Link from 'next/link';
 
 interface Props {
   pessoa: PessoaDesaparecida | null;
   onClose: () => void;
-  onReportarAvistamento: () => void;
   onCompartilhar: () => void;
 }
 
 export default function DetalhesPessoa({ 
   pessoa, 
-  onClose, 
-  onReportarAvistamento, 
+  onClose,  
   onCompartilhar 
 }: Props) {
   if (!pessoa) return null;
@@ -35,7 +34,7 @@ export default function DetalhesPessoa({
       
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <section className="md:col-span-1">
-          <section className="bg-gray-100 p-4 rounded-lg flex justify-center">
+          <section className="bg-gray-100 p-4 text-[#000] rounded-lg flex justify-center">
             {pessoa.foto ? (
               <Image 
                 src={pessoa.foto} 
@@ -45,7 +44,7 @@ export default function DetalhesPessoa({
                 className="h-32 w-32 object-cover rounded-lg"
               />
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-32 w-32 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-32 w-32 text-black-400" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
               </svg>
             )}
@@ -53,21 +52,21 @@ export default function DetalhesPessoa({
         </section>
         
         <section className="md:col-span-2">
-          <h3 className="text-xl font-semibold text-gray-800">{pessoa.nome}</h3>
+          <h3 className="text-xl font-semibold text-[#000]">{pessoa.nome}</h3>
           <section className="grid grid-cols-2 gap-4 mt-3">
             <section>
-              <p className="text-sm text-gray-500">Idade</p>
-              <p className="font-medium">{pessoa.idade} anos</p>
+              <p className="text-sm  text-[#000]">Idade</p>
+              <p className="font-medium text-[#000]">{pessoa.idade} anos</p>
             </section>
             <section>
-              <p className="text-sm text-gray-500">Desaparecido desde</p>
-              <p className="font-medium">
+              <p className="text-sm  text-[#000]">Desaparecido desde</p>
+              <p className="font-medium  text-[#000]">
                 {new Date(pessoa.desaparecidoDesde).toLocaleDateString()}
               </p>
             </section>
             <section>
-              <p className="text-sm text-gray-500">Último avistamento</p>
-              <p className="font-medium">
+              <p className="text-sm  text-[#000]">Último avistamento</p>
+              <p className="font-medium  text-[#000]">
                 {pessoa.ultimoAvistamento 
                   ? new Date(pessoa.ultimoAvistamento).toLocaleDateString() 
                   : 'Desconhecido'
@@ -75,23 +74,25 @@ export default function DetalhesPessoa({
               </p>
             </section>
             <section>
-              <p className="text-sm text-gray-500">Contato</p>
-              <p className="font-medium">{pessoa.contato}</p>
+              <p className="text-sm  text-[#000]">Contato</p>
+              <p className="font-medium  text-[#000]">{pessoa.contato}</p>
             </section>
           </section>
           
           <section className="mt-4">
-            <p className="text-sm text-gray-500">Descrição</p>
-            <p className="mt-1">{pessoa.descricao}</p>
+            <p className="text-sm  text-[#000]">Descrição</p>
+            <p className="mt-1  text-[#000]">{pessoa.descricao}</p>
           </section>
           
           <section className="mt-4 flex space-x-3">
-            <button 
-              onClick={onReportarAvistamento}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
-            >
-              Reportar avistamento
-            </button>
+            <Link href="/avistamentos">
+              <button 
+                className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
+              >
+                Reportar avistamento
+              </button>
+            </Link>
+            
             <button 
               onClick={onCompartilhar}
               className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm transition-colors"

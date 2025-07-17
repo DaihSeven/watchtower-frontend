@@ -11,7 +11,7 @@ export default async function ContatoPage() {
     }
 
   return (
-    <div className="p-4 bg-white shadow-md">
+    <div className="p-4 bg-white shadow-md flex flex-wrap gap-4 mt-16 ">
       <h1 className="flex items-center gap-2 text-2xl text-[#000] font-bold my-4"><CiViewList />Lista de Contatos</h1>
       <Link
     href="/contato/novo"

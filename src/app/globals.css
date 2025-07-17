@@ -18,8 +18,8 @@
 }
 
 body {
-  color: var(--foreground);
-  background-color: var(--background);
+  color: var(--background);
+  background-color: var(--foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

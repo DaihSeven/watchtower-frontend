@@ -85,7 +85,8 @@ export default function PessoaForm({ editData, onSuccess, onCancelEdit }: Props)
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", stiffness: 100, damping: 10 }}
-      className="space-y-5 bg-white p-8 rounded-2xl shadow-sm border border-gray-100 max-w-2xl mx-auto"
+      className="space-y-3 bg-white py-3 px-4 rounded-2xl shadow-sm border border-purple-400 max-w-md mx-auto"
+
     >
       <motion.h2
         whileHover={{ x: 2 }}
@@ -94,7 +95,7 @@ export default function PessoaForm({ editData, onSuccess, onCancelEdit }: Props)
         {editData ? "Editar Cadastro" : "Novo Cadastro"}
       </motion.h2>
 
-      <div className="space-y-5">
+      <div className="space-y-3">
         <motion.div
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
@@ -165,7 +166,7 @@ export default function PessoaForm({ editData, onSuccess, onCancelEdit }: Props)
             {...register("descricao")}
             whileFocus={{ scale: 1.01, borderColor: "#3b82f6" }}
             rows={4}
-            className="w-full px-4 py-3 text-gray-900 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
+            className="w-full px-4 py-3 text-gray-900 border border-purple-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
           />
 
           <AnimatePresence>

@@ -28,7 +28,7 @@ export default function PessoasPage() {
   }, []);
 
   return (
-    <div className="p-4 space-y-6">
+    <div className="p-4 mt-4 space-y-6 bg-[#ededed]">
       <h1 className="text-2xl font-bold">Pessoas Desaparecidas</h1>
 
       <PessoaForm
