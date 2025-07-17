@@ -1,5 +1,5 @@
 "use client";
-
+import { HiClipboardCopy } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import { getAllAvistamentos } from "@/services/avistamentos";
 import { Avistamento } from "@/types/avistamento";
@@ -16,6 +16,7 @@ export default function AvistamentosPage() {
   const [loading, setLoading] = useState(true);
   const [editData, setEditData] = useState<Avistamento | undefined>(undefined);
   const [user, setUser] = useState<User | null>(null);
+  const [showForm, setShowForm] = useState(false);
 
   const fetchAvistamentos = async () => {
     try {
@@ -36,17 +37,36 @@ export default function AvistamentosPage() {
   }, []);
 
   return (
-    <div className="p-4 space-y-6">
+    <div className="p-4 space-y-6 bg-[#ededed]">
       <h1 className="text-2xl font-bold">Avistamentos</h1>
 
-      {user && (
+      {!editData && !showForm && (
+        <button
+          onClick={() => {
+            if (!user) {
+              alert("Você precisa estar logado para criar um avistamento.");
+              return;
+            }
+            setShowForm(true);
+          }}
+          className="flex items-center gap-2 bg-indigo-600 my-4 mt-12 text-white px-4 py-2 rounded hover:bg-indigo-700"
+        ><HiClipboardCopy />
+          Novo Avistamento
+        </button>
+      )}
+
+      {user && (showForm || editData) && (
         <AvistamentoForm
           editData={editData}
           onSuccess={() => {
             fetchAvistamentos();
             setEditData(undefined);
+            setShowForm(false);
           }}
-          onCancelEdit={() => setEditData(undefined)}
+          onCancelEdit={() => {
+            setEditData(undefined);
+            setShowForm(false);
+          }}
         />
       )}
 
@@ -61,7 +81,10 @@ export default function AvistamentosPage() {
               key={a.id}
               avistamento={a}
               onDeleted={fetchAvistamentos}
-              onEdit={(item) => setEditData(item)}
+              onEdit={(item) => {
+                setEditData(item);
+                setShowForm(true);
+              }}
               user={user}
             />
           ))}

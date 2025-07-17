@@ -26,19 +26,22 @@ interface Props {
   onCancelEdit?: () => void;
 }
 
-export default function AvistamentoForm({ editData, onSuccess, onCancelEdit }: Props) {
+export default function AvistamentoForm({
+  editData,
+  onSuccess,
+  onCancelEdit,
+}: Props) {
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
 
   const {
-  register,
-  handleSubmit,
-  reset,
-  formState: { errors },
-} = useForm<AvistamentoFormData>({
-  resolver: zodResolver(schema),
-});
-
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<AvistamentoFormData>({
+    resolver: zodResolver(schema),
+  });
 
   useEffect(() => {
     if (editData) {
@@ -69,52 +72,118 @@ export default function AvistamentoForm({ editData, onSuccess, onCancelEdit }: P
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 bg-white p-6 rounded-lg shadow-md border-2 border-purple-500 shadow-[0_0_20px_5px_rgba(168,85,247,0.6)] transition duration-500 text-purple-700"
+    >
+      <h2 className="text-xl text-[#000] font-semibold">
         {editData ? "Editar Avistamento" : "Registrar Avistamento"}
       </h2>
 
       <div>
-        <label className="block text-sm font-medium">ID da Pessoa Desaparecida</label>
+        <label
+          htmlFor="idPessoaDesaparecida"
+          className="block text-sm text-[#000] font-medium"
+        >
+          ID da Pessoa Desaparecida
+        </label>
         <input
+          id="idPessoaDesaparecida"
           type="number"
           {...register("idPessoaDesaparecida")}
           className="input"
         />
         {errors.idPessoaDesaparecida && (
-          <p className="text-red-500 text-sm">{errors.idPessoaDesaparecida.message}</p>
+          <p className="text-red-500 text-sm">
+            {errors.idPessoaDesaparecida.message}
+          </p>
         )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Comentário</label>
-        <textarea {...register("comentario")} className="input" />
-        {errors.comentario && <p className="text-red-500 text-sm">{errors.comentario.message}</p>}
+        <label
+          htmlFor="comentario"
+          className="block text-sm text-[#000] font-medium"
+        >
+          Comentário
+        </label>
+        <textarea
+          id="comentario"
+          {...register("comentario")}
+          className="input"
+        />
+        {errors.comentario && (
+          <p className="text-red-500 text-sm">{errors.comentario.message}</p>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium">Local</label>
-          <input {...register("localAvistamento")} className="input" />
+          <label
+            htmlFor="localAvistamento"
+            className="block text-[#000] text-sm font-medium"
+          >
+            Local
+          </label>
+          <input
+            id="localAvistamento"
+            {...register("localAvistamento")}
+            className="input"
+          />
         </div>
         <div>
-          <label className="block text-sm font-medium">Latitude</label>
-          <input type="number" {...register("latitude")} className="input" />
+          <label htmlFor="latitude" className="block text-sm font-medium">
+            Latitude
+          </label>
+          <input
+            id="latitude"
+            type="number"
+            {...register("latitude")}
+            className="input"
+          />
         </div>
         <div>
-          <label className="block text-sm font-medium">Longitude</label>
-          <input type="number" {...register("longitude")} className="input" />
+          <label
+            htmlFor="longitude"
+            className="block text-sm text-[#000] font-medium"
+          >
+            Longitude
+          </label>
+          <input
+            id="longitude"
+            type="number"
+            {...register("longitude")}
+            className="input"
+          />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium">Nome do Informante</label>
-          <input {...register("nomeInformante")} className="input" />
+          <label
+            htmlFor="nomeInformante"
+            className="block text-sm text-[#000] font-medium"
+          >
+            Nome do Informante
+          </label>
+          <input
+            id="nomeInformante"
+            {...register("nomeInformante")}
+            className="input"
+          />
         </div>
         <div>
-          <label className="block text-sm font-medium">Contato do Informante</label>
-          <input {...register("contatoInformante")} className="input" />
+          <label
+            htmlFor="contatoInformante"
+            className="block text-sm text-[#000] font-medium"
+          >
+            Contato do Informante
+          </label>
+          <input
+            id="contatoInformante"
+            {...register("contatoInformante")}
+            className="input"
+          />
         </div>
       </div>
 

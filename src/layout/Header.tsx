@@ -22,7 +22,8 @@ export default function Services() {
         <ul className="hidden md:flex space-x-6 text-sm font-medium">
           {[
             { label: "Home", href: "/" },
-            { label: "Pessoas", href: "/pessoaas" },
+            { label: "Pessoas", href: "/pessoas" },
+            { label: "Avistamentos", href: "/avistamentos" },
             { label: "Localizações", href: "/localizacoes" },
             { label: "Contato", href: "/contato" },
           ].map(({ label, href }) => (

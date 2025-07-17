@@ -129,11 +129,6 @@ export default function LocalizacoesPage() {
     setPessoaSelecionada(null);
   };
 
-  const handleReportarAvistamento = () => {
-    // Implementar navegação para página de reportar avistamento
-    alert('Funcionalidade de reportar avistamento será implementada.');
-  };
-
   const handleCompartilhar = () => {
     // Implementar funcionalidade de compartilhamento
     if (navigator.share) {
@@ -154,7 +149,7 @@ export default function LocalizacoesPage() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-[#ededed]">
       <h1 className="text-3xl font-bold text-indigo-800 mb-8">Localizações de Pessoas Desaparecidas</h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -184,7 +179,6 @@ export default function LocalizacoesPage() {
           <DetalhesPessoa 
             pessoa={pessoaSelecionada}
             onClose={handleCloseDetalhes}
-            onReportarAvistamento={handleReportarAvistamento}
             onCompartilhar={handleCompartilhar}
           />
         </div>

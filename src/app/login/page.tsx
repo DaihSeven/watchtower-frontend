@@ -23,7 +23,7 @@ export default function LoginPage() {
       if(res.usuario?.tipo_usuario === 'admin') {
         router.push("/dashboard")
       } else {
-        router.push("/home");
+        router.push("/");
       }
     } catch (error) {
       console.error("Erro no login:", error);

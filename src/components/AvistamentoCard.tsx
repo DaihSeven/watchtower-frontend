@@ -35,10 +35,11 @@ export default function AvistamentoCard({ avistamento, onDeleted, onEdit, user }
   const isOwner = user?.id === avistamento.userId || user?.tipo_usuario === "ADMIN";
 
   return (
-    <div className="bg-white border rounded-lg shadow p-4 space-y-2">
+    <div className="bg-white rounded-lg shadow p-4 space-y-2 text-black border-2 border-blue-500 shadow-[0_0_20px_5px_rgba(168,85,247,0.6)] transition duration-500">
+
       <div className="flex justify-between items-start">
-        <h3 className="font-semibold text-lg">Avistamento #{avistamento.id}</h3>
-        <span className="text-sm text-gray-500">
+        <h3 className="font-semibold text-lg text-[#000]">Avistamento #{avistamento.id}</h3>
+        <span className="text-sm text-[#000]">
           {new Date(avistamento.dataCadastro || "").toLocaleString()}
         </span>
       </div>

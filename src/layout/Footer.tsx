@@ -1,3 +1,4 @@
+
 export default function Footer() {
   return (
     <footer className="bg-blue-600 text-white py-3 px-6">
@@ -6,12 +7,12 @@ export default function Footer() {
           © 2025 Watchtower. Todos os direitos reservados.
         </p>
         <a
-          href="https://github.com/seu-usuario"
+          href="https://github.com/DaihSeven/watchtower-frontend.git"
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-white hover:underline mt-2 md:mt-0"
         >
-          GitHub
+          GitHub- Repositório
         </a>
       </div>
     </footer>
