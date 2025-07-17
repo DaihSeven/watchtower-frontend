@@ -26,7 +26,7 @@ export async function getLocalizacoesComAvistamentos(): Promise<LocalizacaoComAv
         ...localizacao,
         avistamento: avistamentoRelacionado ? {
           id: avistamentoRelacionado.id,
-          dataAvistamento: avistamentoRelacionado.dataHora || '',
+          dataAvistamento: avistamentoRelacionado.dataAtualizacao || '',
           confirmado: true, // Assumindo que se existe um avistamento, é confirmado
           descricao: avistamentoRelacionado.comentario
         } : undefined

@@ -31,13 +31,14 @@ export default function AvistamentoForm({ editData, onSuccess, onCancelEdit }: P
   const [successMsg, setSuccessMsg] = useState("");
 
   const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
+  register,
+  handleSubmit,
+  reset,
+  formState: { errors },
+} = useForm<AvistamentoFormData>({
   resolver: zodResolver(schema),
-    });
+});
+
 
   useEffect(() => {
     if (editData) {
