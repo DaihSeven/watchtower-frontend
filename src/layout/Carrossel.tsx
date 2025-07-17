@@ -1,25 +1,44 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
-
-const images = [
-  '/pessoa4.jpg',
-  '/pessoa5.jpg',
-  '/pessoa6.jpg',
-  '/pessoa2.jpg',
-  '/pessoa1.jpg',
-
-];
-
-const titles = [
-  'União e Solidariedade',
-  'Apoio Coletivo e Esperança',
-];
+import { useEffect, useState } from 'react';
+import axios, { AxiosError } from 'axios';
+import type { Pessoa } from '@/types/pessoas';
 
 export default function Carrossel() {
+  const [pessoas, setPessoas] = useState<Pessoa[]>([]);
   const [current, setCurrent] = useState(0);
-  const total = images.length;
+
+  useEffect(() => {
+    const fetchPessoas = async () => {
+      try {
+        const response = await axios.get('https://watchtower-backend.onrender.com/pessoas');
+        console.log('Resposta da API:', response.data);
+
+        const dados = Array.isArray(response.data)
+          ? response.data
+          : response.data.pessoas;
+
+        if (Array.isArray(dados)) {
+          setPessoas(dados);
+        } else {
+          console.error('Formato inesperado:', response.data);
+        }
+      } catch (err) {
+        const error = err as AxiosError;
+        if (error.response) {
+          console.error('Erro na resposta da API:', error.response.status, error.response.data);
+        } else if (error.request) {
+          console.error('Erro na requisição (sem resposta):', error.request);
+        } else {
+          console.error('Erro ao configurar a requisição:', error.message);
+        }
+      }
+    };
+
+    fetchPessoas();
+  }, []);
+
+  const total = pessoas.length;
 
   const prevSlide = () => {
     setCurrent((prev) => (prev === 0 ? total - 1 : prev - 1));
@@ -29,30 +48,40 @@ export default function Carrossel() {
     setCurrent((prev) => (prev === total - 1 ? 0 : prev + 1));
   };
 
+  const pessoaAtual = pessoas[current] ?? null;
+
+  if (!pessoaAtual) {
+    return (
+      <div className="text-center py-20">
+        <p className="text-gray-600">Carregando pessoas desaparecidas...</p>
+      </div>
+    );
+  }
+
   return (
     <section className="w-full py-12 bg-white">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-blue-800">Algumas pessoas</h2>
-        <p className="text-gray-600 mt-2">Talvez voce tenha visto.</p>
+        <h2 className="text-3xl font-bold text-blue-800">Pessoas desaparecidas</h2>
+        <p className="text-gray-600 mt-2">Se avistar, entre em contato</p>
       </div>
 
-      <div className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-xl shadow-lg bg-gray-100">
-        {/* Imagem principal */}
-        <div className="transition-all duration-500">
-          <Image
-            src={images[current]}
-            alt={`Slide ${current + 1}`}
-            width={1000}
-            height={600}
-            className="w-full h-auto object-cover"
-          />
-          {/* Título da imagem */}
-          <div className="absolute bottom-0 left-0 right-0 bg-blue-900/60 text-white p-4 text-center">
-            <h3 className="text-lg font-semibold">{titles[current]}</h3>
-          </div>
+      <div className="relative w-full max-w-2xl mx-auto p-8 bg-blue-50 rounded-xl shadow-md">
+        <div className="transition-all duration-500 text-center space-y-2">
+          <p className="text-xl text-blue-900 font-semibold">{pessoaAtual.nome}</p>
+          {pessoaAtual.idade && (
+            <p className="text-base text-gray-800">Idade: {pessoaAtual.idade}</p>
+          )}
+          {/* Você pode reativar estas linhas se os dados forem válidos */}
+          {/* {pessoaAtual.ultimaLocalizacao && (
+            <p className="text-base text-gray-800">
+              Última localização: {pessoaAtual.ultimaLocalizacao}
+            </p>
+          )}
+          <p className="text-sm text-gray-600 italic">
+            Desaparecido desde: {pessoaAtual.desaparecidoDesde}
+          </p> */}
         </div>
 
-        {/* Botão anterior */}
         <button
           onClick={prevSlide}
           className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white text-blue-700 hover:bg-blue-100 p-3 rounded-full shadow-md transition"
@@ -60,7 +89,6 @@ export default function Carrossel() {
           &#10094;
         </button>
 
-        {/* Botão próximo */}
         <button
           onClick={nextSlide}
           className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white text-blue-700 hover:bg-blue-100 p-3 rounded-full shadow-md transition"
@@ -68,12 +96,12 @@ export default function Carrossel() {
           &#10095;
         </button>
 
-        {/* Indicadores (bolinhas) */}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-          {images.map((_, i) => (
+          {pessoas.map((_, i) => (
             <span
               key={i}
-              className={`w-3 h-3 rounded-full ${
+              onClick={() => setCurrent(i)}
+              className={`w-3 h-3 rounded-full cursor-pointer ${
                 i === current ? 'bg-blue-600' : 'bg-gray-300'
               }`}
             />
@@ -83,4 +111,3 @@ export default function Carrossel() {
     </section>
   );
 }
- 

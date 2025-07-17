@@ -1,53 +1,56 @@
+'use client';
+
+import Image from "next/image";
+
 export default function Cards() {
   const cards = [
     {
-      title: "Pessoa 1",
+      title: "Mario Santos Rocha",
       image: "/pessoa1.jpg",
-      description: "Pessoa desaparecida desde abril de 2024.",
+      description: "Abril de 2024.",
     },
     {
-      title: "Pessoa 2",
+      title: "Claudio Souza Silva",
       image: "/pessoa3.jpg",
-      description: "Avistada pela última vez na Zona Norte.",
+      description: "Março de 2021.",
     },
     {
-      title: "Pessoa 5",
+      title: "Paula Santos Almeida",
       image: "/pessoa4.jpg",
-      description: "Informações podem ajudar nas buscas.",
+      description: "Janeiro de 2023.",
     },
   ];
 
   return (
-    <main className="min-h-screen px-4 py-10 bg-gray-50">
-      <h1 className="text-3xl font-bold text-center text-blue-900 mb-8">
-        Pessoas Desaparecidas
+    <section className="cards-container px-4 py-6 bg-gray-50">
+      <h1 className="text-2xl font-bold text-center text-blue-900 mb-6">
+        Pessoas encontradas 
       </h1>
 
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
         {cards.map((card, i) => (
-          <div
-            key={i}
-            className="bg-white rounded-xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1"
+          <article
+            key={card.title}
+            className="bg-white rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-1 h-auto"
           >
-            <div className="aspect-[4/3] w-full overflow-hidden rounded-t-xl">
-              <img
+            <div className="aspect-[4/3] w-full overflow-hidden rounded-t-lg relative max-h-48">
+              <Image
                 src={card.image}
                 alt={`Foto de ${card.title}`}
-                className="w-full h-full object-cover"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-t-lg"
+                priority={i === 0}
               />
             </div>
 
-            <div className="p-4 flex flex-col justify-between h-full">
-              <div>
-                <h2 className="text-lg font-semibold text-blue-800">{card.title}</h2>
-                <p className="text-gray-600 text-sm mt-1 mb-4">{card.description}</p>
-
-              </div>
-              
+            <div className="p-3">
+              <h2 className="text-base font-semibold text-blue-800">{card.title}</h2>
+              <p className="text-gray-600 text-sm mt-1">{card.description}</p>
             </div>
-          </div>
+          </article>
         ))}
-      </section>
-    </main>
+      </div>
+    </section>
   );
 }
