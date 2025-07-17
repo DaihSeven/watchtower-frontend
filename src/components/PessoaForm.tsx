@@ -7,6 +7,7 @@ import { createPessoa, updatePessoa } from "@/services/pessoas";
 import { Pessoa } from "@/types/pessoas";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { motion, AnimatePresence } from "framer-motion";
 
 const schema = z.object({
   nome: z.string().min(3, "Nome muito curto"),
@@ -69,61 +70,172 @@ export default function PessoaForm({ editData, onSuccess, onCancelEdit }: Props)
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold">
-        {editData ? "Editar Pessoa" : "Cadastrar Pessoa"}
-      </h2>
+    <motion.form
+      onSubmit={handleSubmit(onSubmit)}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", stiffness: 100, damping: 10 }}
+      className="space-y-5 bg-white p-8 rounded-2xl shadow-sm border border-gray-100 max-w-2xl mx-auto"
+    >
+      <motion.h2
+        whileHover={{ x: 2 }}
+        className="text-3xl font-bold text-gray-900 mb-6 text-center"
+      >
+        {editData ? "Editar Cadastro" : "Novo Cadastro"}
+      </motion.h2>
 
-      <div>
-        <label className="block text-sm font-medium">Nome</label>
-        <input {...register("nome")} className="input" />
-        {errors.nome && <p className="text-red-500 text-sm">{errors.nome.message}</p>}
+      <div className="space-y-5">
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <label className="block text-base font-medium text-gray-800 mb-2">
+            Nome Completo
+          </label>
+          <motion.input
+            {...register("nome")}
+            whileFocus={{ scale: 1.01, borderColor: "#3b82f6" }}
+            className="w-full px-4 py-3 text-gray-900 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
+          />
+          <AnimatePresence>
+            {errors.nome && (
+              <motion.p
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="text-red-600 text-sm mt-1 font-medium"
+              >
+                {errors.nome.message}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.15 }}
+        >
+          <label className="block text-base font-medium text-gray-800 mb-2">
+            Idade
+          </label>
+          <motion.input
+            type="number"
+            {...register("idade")}
+            whileFocus={{ scale: 1.01, borderColor: "#3b82f6" }}
+            className="w-full px-4 py-3 text-gray-900 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
+          />
+          <AnimatePresence>
+            {errors.idade && (
+              <motion.p
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="text-red-600 text-sm mt-1 font-medium"
+              >
+                {errors.idade.message}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <label className="block text-base font-medium text-gray-800 mb-2">
+            Descrição
+          </label>
+          <motion.textarea
+            {...register("descricao")}
+            whileFocus={{ scale: 1.01, borderColor: "#3b82f6" }}
+            rows={4}
+            className="w-full px-4 py-3 text-gray-900 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
+          />
+          <AnimatePresence>
+            {errors.descricao && (
+              <motion.p
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="text-red-600 text-sm mt-1 font-medium"
+              >
+                {errors.descricao.message}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.25 }}
+        >
+          <label className="block text-base font-medium text-gray-800 mb-2">
+            Última Localização
+          </label>
+          <motion.input
+            {...register("ultimaLocalizacao")}
+            whileFocus={{ scale: 1.01, borderColor: "#3b82f6" }}
+            className="w-full px-4 py-3 text-gray-900 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
+          />
+        </motion.div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium">Idade</label>
-        <input type="number" {...register("idade")} className="input" />
-        {errors.idade && <p className="text-red-500 text-sm">{errors.idade.message}</p>}
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium">Descrição</label>
-        <textarea {...register("descricao")} className="input" />
-        {errors.descricao && <p className="text-red-500 text-sm">{errors.descricao.message}</p>}
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium">Última Localização</label>
-        <input {...register("ultimaLocalizacao")} className="input" />
-      </div>
-
-      <div className="flex gap-2">
-        <button
+      <motion.div 
+        className="flex gap-4 pt-2"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        <motion.button
           type="submit"
           disabled={loading}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 flex-1 font-medium text-lg shadow-sm"
         >
-          {loading
-            ? editData
-              ? "Salvando..."
-              : "Cadastrando..."
-            : editData
-            ? "Salvar Alterações"
-            : "Cadastrar"}
-        </button>
+          {loading ? (
+            <motion.span
+              animate={{ opacity: [0.6, 1, 0.6] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            >
+              {editData ? "Salvando..." : "Cadastrando..."}
+            </motion.span>
+          ) : editData ? (
+            "Salvar Alterações"
+          ) : (
+            "Cadastrar"
+          )}
+        </motion.button>
 
         {editData && (
-          <button
+          <motion.button
             type="button"
             onClick={onCancelEdit}
-            className="text-sm text-gray-600 underline"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="bg-gray-100 text-gray-800 px-6 py-3 rounded-xl hover:bg-gray-200 flex-1 font-medium text-lg shadow-sm"
           >
-            Cancelar Edição
-          </button>
+            Cancelar
+          </motion.button>
         )}
-      </div>
+      </motion.div>
 
-      {successMsg && <p className="text-green-600">{successMsg}</p>}
-    </form>
+      <AnimatePresence>
+        {successMsg && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="text-green-600 text-center mt-4 font-medium text-lg"
+          >
+            {successMsg}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.form>
   );
 }
