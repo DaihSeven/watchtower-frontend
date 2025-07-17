@@ -39,7 +39,7 @@ export default function RegisterPage() {
 
   return (
     <section className="section-user">
-      <h1 className="text-6xl">Cadastro</h1>
+      <h1 className="text-5xl">Cadastro</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col items-center gap-2"

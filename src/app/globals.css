@@ -27,7 +27,7 @@ body {
 /* Estilo dos inputs das páginas Login e Cadastro */
 
 .section-user {
-  @apply bg-[#ffffff] text-gray-700 w-full h-100 flex flex-col justify-center items-center gap-10;
+  @apply bg-[#ffffff] text-gray-700 w-full h-100 flex flex-col justify-center items-center gap-10 h-152;
 }
 
 .form-user {
