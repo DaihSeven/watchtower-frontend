@@ -27,5 +27,9 @@ body {
 /* Estilo dos inputs das páginas Login e Cadastro */
 
 .input-base {
-  @apply border-(--main-color) border-2 border-solid rounded-lg p-1 w-100 text-center;
+  border: 2px solid var(--main-color);
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  width: 100%;
+  text-align: center;
 }
