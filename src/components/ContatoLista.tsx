@@ -9,7 +9,7 @@ export default function ContatoLista({ contatos }: ContatoListaProps){
   if (!contatos.length) return <p>Nenhum contato encontrado.</p>;
 
   return (
-    <ul className="space-y-3">
+    <ul className="flex flex-wrap gap-4">
         {contatos.map((c) => (
             <ContatoItem key={c.id} contato={c} />
         ))}
