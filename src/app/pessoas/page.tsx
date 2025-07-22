@@ -1,62 +1,65 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
-import { getAllPessoas } from "@/services/pessoas";
-import { Pessoa } from "@/types/pessoas";
-import PessoaCard from "@/components/PessoaCard";
-import PessoaForm from "@/components/PessoaForm";
+import { useEffect, useState } from 'react'
+import { Pessoa } from '@/types/pessoas'
+import { getPessoas } from '@/services/pessoas'
+import Link from 'next/link'
+import { HiPlusCircle } from 'react-icons/hi'
+import { PessoaCard } from '@/components/PessoaCard'
 
 export default function PessoasPage() {
-  const [pessoas, setPessoas] = useState<Pessoa[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editData, setEditData] = useState<Pessoa | undefined>(undefined);
-
-  const fetchPessoas = async () => {
-    try {
-      setLoading(true);
-      const data = await getAllPessoas();
-      setPessoas(data);
-    } catch (error) {
-      console.error("Erro ao buscar pessoas:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [pessoas, setPessoas] = useState<Pessoa[]>([])
+  const [erro, setErro] = useState<string | null>(null)
 
   useEffect(() => {
-    fetchPessoas();
-  }, []);
+    async function carregarPessoas() {
+      try {
+        const dados = await getPessoas()
+        setPessoas(dados)
+      } catch (error) {
+        console.error('Erro ao carregar pessoas:', error)
+        setErro('Erro ao buscar pessoas. Tente novamente mais tarde.')
+      }
+    }
+
+    carregarPessoas()
+  }, [])
 
   return (
-    <div className="p-4 mt-4 space-y-6 bg-[#ededed]">
-      <h1 className="text-2xl font-bold">Pessoas Desaparecidas</h1>
+    <div className="max-w-5xl mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">Pessoas Desaparecidas</h1>
+        <Link href="/pessoas/nova">
+          <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-md">
+            <HiPlusCircle className="text-xl" />
+            Nova Pessoa
+          </button>
+        </Link>
+      </div>
 
-      <PessoaForm
-        editData={editData}
-        onSuccess={() => {
-          fetchPessoas();
-          setEditData(undefined);
-        }}
-        onCancelEdit={() => setEditData(undefined)}
-      />
+      {erro && (
+        <div className="text-red-600 font-medium mb-4">
+          {erro}
+        </div>
+      )}
 
-      {loading ? (
-        <p>Carregando pessoas...</p>
-      ) : pessoas.length === 0 ? (
-        <p>Nenhuma pessoa encontrada.</p>
+      {pessoas.length === 0 && !erro ? (
+        <p className="text-gray-600">Nenhuma pessoa cadastrada.</p>
       ) : (
-        <div className="grid gap-4">
-          {pessoas.map((p) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {pessoas.map((pessoa) => (
             <PessoaCard
-              key={p.id}
-              pessoa={p}
-              onDeleted={fetchPessoas}
-              onEdit={(item) => setEditData(item)}
+              key={pessoa.id}
+              pessoa={pessoa}
+              onDelete={() => {
+                }}
+              onEdit={() => {
+                
+              }}
             />
           ))}
         </div>
       )}
     </div>
-  );
+  )
 }
-

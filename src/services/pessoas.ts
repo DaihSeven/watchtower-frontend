@@ -1,22 +1,29 @@
-import { Pessoa } from "@/types/pessoas";
 import { api } from "./api";
 
-export async function getAllPessoas(): Promise<Pessoa[]> {
-  const response = await api.get("/pessoas");
-  return response.data.pessoas;
+export type Pessoa = {
+  id: number;
+  nome: string;
+  idade: number;
+  descricao?: string;
+  status: "ATIVO" | "ENCONTRADO";
+  dataDesaparecimento: string;
+};
+
+export async function getPessoas(): Promise<Pessoa[]> {
+  const res = await api.get("/pessoas");
+  return res.data.pessoas;
 }
 
-export async function createPessoa(data: Omit<Pessoa, "id">): Promise<Pessoa> {
-  const response = await api.post("/pessoas/cadastrar", data);
-  return response.data.pessoa;
+export async function cadastrarPessoa(data: Omit<Pessoa, "id">): Promise<Pessoa> {
+  const res = await api.post("/pessoas/cadastrar", data);
+  return res.data.pessoa;
 }
 
-export async function updatePessoa(id: number, data: Omit<Pessoa, "id">): Promise<Pessoa> {
-  const response = await api.patch(`/pessoas/atualizar/${id}`, data);
-  return response.data.pessoa;
-}
-
-export async function deletePessoa(id: number): Promise<void> {
+export async function deletarPessoa(id: number): Promise<void> {
   await api.delete(`/pessoas/deletar/${id}`);
 }
 
+export async function atualizarPessoa(id: number, data: Partial<Omit<Pessoa, "id">>): Promise<Pessoa> {
+  const res = await api.put(`/pessoas/atualizar/${id}`, data);
+  return res.data.pessoa;
+}

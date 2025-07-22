@@ -10,7 +10,11 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     console.error('Erro na API:', error);
-    return Promise.reject(error);
+    if (error instanceof Error) {
+      return Promise.reject(error);
+    } else {
+      return Promise.reject(new Error(typeof error === 'string' ? error : JSON.stringify(error)));
+    }
   }
   
 );
@@ -20,6 +24,16 @@ api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+api.interceptors.request.use((config) => {
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return config;
 });

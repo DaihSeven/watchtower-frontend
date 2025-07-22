@@ -1,12 +1,8 @@
 export interface Pessoa {
-  id?: number;
+   id: number;
   nome: string;
-  idade?: number;
-  desaparecidoDesde: string;
+  idade: number;
   descricao?: string;
-  fotoUrl?: string;
-  criadoEm?: string;
-  atualizadoEm?: string;
-  userId?: number;
-  ultimaLocalizacao?: string;
+  status: "ATIVO" | "ENCONTRADO";
+  dataDesaparecimento: string;
 }
