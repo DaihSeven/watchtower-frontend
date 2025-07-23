@@ -1,4 +1,4 @@
-import { User } from '@/types/user';
+import { User, TipoUsuario } from '@/types/user';
 import { api } from './api';
 
 interface LoginResponse {
@@ -11,10 +11,10 @@ export const loginUser = async (email: string, senha: string): Promise<LoginResp
         email,
         senha,
     });
-    return responseLogin.data; // espera { token, user, ...}
+    return responseLogin.data;
 };
 
-export const registerUser = async (nome: string, email: string, senha: string, tipo_usuario: string, senha_admin?: string) => {
+export const registerUser = async (nome: string, email: string, senha: string, tipo_usuario: TipoUsuario, senha_admin?: string) => {
     const responseRegister = await api.post(`/user/registrar`, {
         nome,
         email,

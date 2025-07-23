@@ -26,9 +26,9 @@ O **Watchtower** centraliza os dados de pessoas desaparecidas e fornece funciona
 
 O Watchtower é composto por:
 
-- **Backend (API)** em Node.js com TypeScript, JWT e banco PostgreSQL via Prisma.
+- **Backend (API)** em Node.js com JavaScript, JWT e banco PostgreSQL via Prisma.
 [https://github.com/DaihSeven/watchtower-backend.git](https://github.com/DaihSeven/watchtower-backend.git)
-- **Frontend (Next.js)** moderno com mapas (Leaflet), autenticação (NextAuth) e formulários validados com React Hook Form + Zod.
+- **Frontend (Next.js)** moderno com mapas (Leaflet), TypeScript, autenticação (NextAuth) e formulários validados com React Hook Form + Zod.
 [https://github.com/DaihSeven/watchtower-frontend.git](https://github.com/DaihSeven/watchtower-frontend.git)
 
 A plataforma conecta autoridades, famílias e cidadãos com um objetivo comum: ajudar na busca e localização de pessoas desaparecidas com agilidade e segurança.
@@ -40,7 +40,7 @@ A plataforma conecta autoridades, famílias e cidadãos com um objetivo comum: a
 ### 🔧 Backend (API)
 
 - Node.js + Express
-- TypeScript
+- JavaScript
 - Prisma ORM + PostgreSQL
 - JWT (Autenticação)
 - Swagger (Documentação interativa)
@@ -50,6 +50,7 @@ A plataforma conecta autoridades, famílias e cidadãos com um objetivo comum: a
 
 - Next.js 15 + Turbopack
 - React 19
+- TypeScript
 - Tailwind CSS 4
 - React Hook Form + Zod
 - NextAuth
@@ -153,17 +154,17 @@ Acesse: `http://localhost:3000`
 
 ## 🔧 Melhorias Futuras
 
-* ✅ Tornar/Arrumar o login **persistente** no frontend (salvar sessão e token).
-* ✅ Tornar funcional a **restrição de ações (criar/editar/deletar)** apenas para usuários autenticados, que estão bloqueadas.
-* 🐞 Corrigir a rota `/pessoas` que está diferente do backend no momento.
-* 📲 Adicionar upload de imagem para perfis de desaparecidos.
-* 📍 Melhorar visualização por filtros, datas, e conectar ao banco real no mapa de avistamentos(está sendo usando um apenas de demonstração).
+* ✅ Tornar/Arrumar o login **persistente** no frontend (salvar sessão e token).<i>(em andamento)</i>
+* ✅ Tornar funcional a **restrição de ações (criar/editar/deletar)** apenas para usuários autenticados, que estão bloqueadas.<i>(em andamento)</i>
+* 🐞 Corrigir a rota `/pessoas` que está diferente do backend no momento.<i>(em andamento)</i>
+* 📲 Adicionar upload de imagem para perfis de desaparecidos.<i>(em andamento)</i>
+* 📍 Melhorar visualização por filtros, datas, e conectar ao banco real no mapa de avistamentos(está sendo usando um apenas de demonstração).<i>(não iniciado)</i>
 
 ---
 
 ## 🧠 Contribuição
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou pull request com sugestões, bugs ou melhorias.
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou pull request com sugestões, conserto bugs ou melhorias gerais.
 
 ---
 

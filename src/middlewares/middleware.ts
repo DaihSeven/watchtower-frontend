@@ -18,5 +18,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/dashboard/:path', '/login', '/register'], //Protege dashboard e subrotas
+    matcher: ['/dashboard/:path', '/login', '/register'], 
 }

@@ -5,7 +5,6 @@ export const api = axios.create({
   timeout: 20000,
 });
 
-// Interceptor para tratamento de erros
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -19,7 +18,6 @@ api.interceptors.response.use(
   
 );
 
-// Interceptor para adicionar token de autenticação
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {

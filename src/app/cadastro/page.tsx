@@ -8,6 +8,7 @@ import {
   RegisterValidation,
 } from "@/utils/registerValidation";
 import { registerUser } from "@/services/auth";
+import { TipoUsuario} from "@/types/user";
 
 export default function RegisterPage() {
   const {
@@ -28,7 +29,7 @@ export default function RegisterPage() {
         data.nome,
         data.email,
         data.senha,
-        data.tipo_usuario,
+        data.tipo_usuario as TipoUsuario,
         data.senha_admin
       );
       router.push("/login");
@@ -84,9 +85,7 @@ export default function RegisterPage() {
         >
           Cadastrar
         </button>
-        {/* {Object.keys(errors).length > 0 && (
-          <pre className="text-red-500 bg-red-100 p-2 rounded">{JSON.stringify(errors, null, 2)}</pre>
-        )} */}
+        
       </form>
     </section>
   );

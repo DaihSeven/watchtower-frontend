@@ -9,7 +9,6 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
   const router = useRouter();
 
   useEffect(() => {
-    // Só roda quando terminar de carregar e já tivermos o user (ou certeza de que não tem)
     if (!loading) {
       if (!token) {
         router.replace("/login");
@@ -19,9 +18,8 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
     }
   }, [token, user, loading, router]);
 
-  // Enquanto carrega ou enquanto ainda não definiu o user, não renderiza nada
   if (loading || (token && !user)) {
-    return <p>Carregando...</p>; // ou um spinner bonitinho
+    return <p>Carregando...</p>; 
   }
 
   return <>{children}</>;

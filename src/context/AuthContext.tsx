@@ -1,13 +1,12 @@
 "use client";
-import { JWTPayload } from "@/types/user";
-import { createContext, useContext, useEffect, useState } from "react";
+import { JWTPayload, User } from "@/types/user";
+import { createContext, useContext, useEffect, useState, useMemo } from "react";
 import { jwtDecode } from "jwt-decode";
-import { User } from "@/types/user";
 
 interface AuthContextProps {
   user: User | null;
   token: string | null;
-  login: (token: string, userData?: User) => void; // ✅ agora pode receber o usuário direto
+  login: (token: string, userData?: User) => void; 
   logout: () => void;
   loading: boolean;
 }
@@ -45,7 +44,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     let decodedUser: User;
 
     if (userData) {
-      decodedUser = userData; // ✅ usa direto do backend
+      decodedUser = userData;
     } else {
       const decoded = jwtDecode<JWTPayload>(token);
       decodedUser = {
@@ -67,8 +66,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   };
 
+  const contextValue = useMemo(() => ({
+    user,
+    token,
+    login,
+    logout,
+    loading
+  }), [user, token, login, logout, loading]);
+
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );
