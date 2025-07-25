@@ -159,6 +159,8 @@ Acesse: `http://localhost:3000`
 * 📲 Adicionar upload de imagem para perfis de desaparecidos.
 * 📍 Melhorar visualização por filtros, datas, e conectar ao banco real no mapa de avistamentos(está sendo usando um apenas de demonstração).
 
+  
+<i>(mudanças para a versão 2 ocorrendo na branch devsocketmage</i>
 ---
 
 ## 🧠 Contribuição
