@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
 import "./globals.css";
 import Footer from "@/layout/Footer";
 import Header from "@/layout/Header";
 import { AuthProvider } from "@/context/AuthContext";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["100","200","300","400","500","600","700","800","900"],
-});
 
 export const metadata: Metadata = {
   title: "Watchtower",
@@ -21,14 +15,27 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
-
-      <body className={`${poppins.className }antialiased`}>
-        <Header />
+    <html lang="pt-BR">
+      <head>
+        {/* Preconnect para otimizar carregamento das fontes */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        
+        {/* Google Fonts via CDN, correção necessário após problema com turbopack */}
+        <link 
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" 
+          rel="stylesheet" 
+        />
+      </head>
+      
+      <body className="font-poppins antialiased">
         <AuthProvider>
-        {children}
+          <Header />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
         </AuthProvider>
-        <Footer />
       </body>      
     </html>
   );

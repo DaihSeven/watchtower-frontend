@@ -154,10 +154,10 @@ Acesse: `http://localhost:3000`
 
 ## 🔧 Melhorias Futuras
 
-* ✅ Tornar/Arrumar o login **persistente** no frontend (salvar sessão e token).<i>(em andamento)</i>
-* ✅ Tornar funcional a **restrição de ações (criar/editar/deletar)** apenas para usuários autenticados, que estão bloqueadas.<i>(em andamento)</i>
-* 🐞 Corrigir a rota `/pessoas` que está diferente do backend no momento.<i>(em andamento)</i>
-* 📲 Adicionar upload de imagem para perfis de desaparecidos.<i>(em andamento)</i>
+* ✅ Tornar/Arrumar o login **persistente** no frontend (salvar sessão e token).<i>(em andamento, alguma inconformidade ainda)</i>
+* ✅ Tornar funcional a **restrição de ações (criar/editar/deletar)** apenas para usuários autenticados, que estão bloqueadas.<i>(em andamento, quase finalizado, arrumar outra parte que está interferindo nos testes)</i>
+* 🐞 Corrigir a rota `/pessoas` que está diferente do backend no momento.<i>(em andamento, quase finalizado, falta form)</i>
+* 📲 Adicionar upload de imagem para perfis de desaparecidos.<i>(em andamento, quase finalizado, falta form)</i>
 * 📍 Melhorar visualização por filtros, datas, e conectar ao banco real no mapa de avistamentos(está sendo usando um apenas de demonstração).<i>(não iniciado)</i>
 
 ---

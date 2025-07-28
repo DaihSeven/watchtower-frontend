@@ -12,5 +12,6 @@ export interface JWTPayload {
   nome: string;
   email: string;
   tipo_usuario: TipoUsuario;
+  exp?: number;
+  iat?: number; 
 }
-

@@ -1,12 +1,13 @@
 "use client";
-import { JWTPayload, User } from "@/types/user";
-import { createContext, useContext, useEffect, useState, useMemo } from "react";
+import { JWTPayload } from "@/types/user";
+import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { User } from "@/types/user";
 
 interface AuthContextProps {
   user: User | null;
   token: string | null;
-  login: (token: string, userData?: User) => void; 
+  login: (token: string, userData?: User) => void;
   logout: () => void;
   loading: boolean;
 }
@@ -19,45 +20,69 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-
-    if (storedToken) {
+    if (typeof window === 'undefined') return;
+    
+    const initializeAuth = () => {
       try {
-        const decoded = jwtDecode<JWTPayload>(storedToken);
-        const decodedUser: User = {
+        const storedToken = localStorage.getItem("token");
+        
+        if (storedToken) {
+          const decoded = jwtDecode<JWTPayload>(storedToken);
+          
+          const currentTime = Date.now() / 1000;
+          if (decoded.exp && decoded.exp < currentTime) {
+            console.log("Token expirado, removendo...");
+            localStorage.removeItem("token");
+            setLoading(false);
+            return;
+          }
+          
+          const decodedUser: User = {
+            id: Number(decoded.id),
+            nome: decoded.nome,
+            email: decoded.email,
+            tipo_usuario: decoded.tipo_usuario,
+          };
+          
+          setToken(storedToken);
+          setUser(decodedUser);
+        }
+      } catch (error) {
+        console.error("Erro ao inicializar autenticação:", error);
+        localStorage.removeItem("token");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initializeAuth();
+  }, []);
+
+  const login = (newToken: string, userData?: User) => {
+    try {
+      let decodedUser: User;
+
+      if (userData) {
+        decodedUser = userData;
+      } else {
+        const decoded = jwtDecode<JWTPayload>(newToken);
+        decodedUser = {
           id: Number(decoded.id),
           nome: decoded.nome,
           email: decoded.email,
           tipo_usuario: decoded.tipo_usuario,
         };
-        setToken(storedToken);
-        setUser(decodedUser);
-      } catch (error) {
-        console.error("Token inválido ou expirado", error);
-        localStorage.removeItem("token");
       }
+
+      localStorage.setItem("token", newToken);
+      setUser(decodedUser);
+      setToken(newToken);
+      
+      console.log("Login realizado com sucesso:", decodedUser);
+    } catch (error) {
+      console.error("Erro no login:", error);
+      throw new Error("Erro ao processar token de login");
     }
-    setLoading(false);
-  }, []);
-
-  const login = (token: string, userData?: User) => {
-    let decodedUser: User;
-
-    if (userData) {
-      decodedUser = userData;
-    } else {
-      const decoded = jwtDecode<JWTPayload>(token);
-      decodedUser = {
-        id: Number(decoded.id),
-        nome: decoded.nome,
-        email: decoded.email,
-        tipo_usuario: decoded.tipo_usuario,
-      };
-    }
-
-    localStorage.setItem("token", token);
-    setUser(decodedUser);
-    setToken(token);
   };
 
   const logout = () => {
@@ -66,16 +91,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   };
 
-  const contextValue = useMemo(() => ({
-    user,
-    token,
-    login,
-    logout,
-    loading
-  }), [user, token, login, logout, loading]);
-
   return (
-    <AuthContext.Provider value={contextValue}>
+    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
